@@ -20,6 +20,22 @@ class SObject:
         self.params = params
         self.velocity = np.random.random((2,))
 
+        if self.shape_type == Shape.RECTANGLE:
+            self.boundMinX = self.params['pt1'][0]
+            self.boundMaxX = self.params['pt2'][0]
+            self.boundMinY = self.params['pt1'][1]
+            self.boundMaxY = self.params['pt2'][1]
+        elif self.shape_type == Shape.TRIANGLE:
+            self.boundMinX = min(self.params['pt1'][0], self.params['pt2'][0], self.params['pt3'][0])
+            self.boundMaxX = max(self.params['pt1'][0], self.params['pt2'][0], self.params['pt3'][0])
+            self.boundMinY = min(self.params['pt1'][1], self.params['pt2'][1], self.params['pt3'][1])
+            self.boundMaxY = max(self.params['pt1'][1], self.params['pt2'][1], self.params['pt3'][1])
+        else:
+            self.boundMinX = self.params['centerPt'][0] - self.params['radius']
+            self.boundMaxX = self.params['centerPt'][0] + self.params['radius']
+            self.boundMinY = self.params['centerPt'][1] - self.params['radius']
+            self.boundMaxY = self.params['centerPt'][1] + self.params['radius']
+
 class Scene:
     def __init__(self, shape=(), num_noise=10):
         self.img = np.ones(*shape)
