@@ -40,8 +40,8 @@ class SObject:
             self.boundMaxY = self.params['centerPt'][1] + self.params['radius']
 
 class Scene:
-    def __init__(self, shape=(), num_noise=10):
-        self.img = (np.ones(shape) * 255).astype(np.uint8)
+    def __init__(self, shape=(), num_noise=20):
+        self.img = (np.ones(shape + (3,)) * 255).astype(np.uint8)
         self.num_noise = num_noise
         self.noises = []
         self.objects = []
@@ -50,7 +50,7 @@ class Scene:
         noise_y = np.random.randint(self.img.shape[1], size=(self.num_noise,))
         noise = np.column_stack([noise_x, noise_y])
         for x, y in noise:
-            shape = random.choice(list(Shape))
+            shape = Shape.TRIANGLE
             if shape == Shape.CIRCLE:
                 params = {
                     'centerPt' : (y, x),
@@ -76,8 +76,8 @@ class Scene:
                 v = int(math.sqrt(4*MAX_SIZE_NOISE/math.sqrt(3)))
                 a = random.randint(u, v)
                 pt1 = (y, x)
-                pt2 = (y, x + a)
-                pt3 = (y + a, x + round(a/2))
+                pt2 = (y + a, x)
+                pt3 = (y + round(a/2), np.clip(x - a, 0, self.img.shape[1]))
                 params = {
                     'pt1': pt1,
                     'pt2': pt2,
