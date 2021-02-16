@@ -32,7 +32,19 @@ class SObject:
         self.params = params
         self.velocity = np.array([random.randint(MIN_VELOCITY, MAX_VELOCITY),
                                   random.randint(MIN_VELOCITY, MAX_VELOCITY)])
+        self.recompute()
 
+    def get_keypoints(self):
+        if self.shape_type == Shape.CIRCLE:
+            return ['centerPt']
+        if self.shape_type == Shape.RECTANGLE:
+            return ['pt1', 'pt2']
+        return ['pt1', 'pt2', 'pt3']
+
+    def get_points(self):
+        return {x : self.params[x] for x in self.get_keypoints()}
+
+    def recompute(self):
         if self.shape_type == Shape.RECTANGLE:
             self.boundMinX = self.params['pt1'][0]
             self.boundMaxX = self.params['pt2'][0]
@@ -51,16 +63,48 @@ class SObject:
 
 
 class Scene:
-    def __init__(self, shape=(), num_noise=random.choice(range(16,23)), num_objects=random.choice(range(4,7))):
+    def __init__(self, shape=(), num_noise=random.choice(range(16, 23)), num_objects=random.choice(range(4, 7))):
+        self.shape = shape
         self.img = (np.ones(shape + (3,)) * 255).astype(np.uint8)
         self.num_noise = num_noise
         self.num_objects = num_objects
-        self.noises = []
-        self.objects = []
+        self.noises : list[SObject] = []
+        self.objects: list[SObject] = []
 
         self.generate(noise=True)
         self.generate(noise=False)
 
+        self.rectify_collisions()
+
+    def rectify_collisions(self):
+        l = self.objects.copy()
+        for o in l:
+            d = o.get_points()
+            for k, (x, y) in d.items():
+                o.params[k] = (x + max(0, -o.boundMinX) - max(0, o.boundMaxX - self.img.shape[1]),
+                                y + max(0, -o.boundMinY) - max(0, o.boundMaxY - self.img.shape[0]))
+            o.recompute()
+        while len(l):
+            o1 = l.pop()
+            for o2 in l:
+                colliding = o1.boundMinY - o1.boundMaxX
+
+    def render(self):
+        self.img = (np.ones(self.shape + (3,)) * 255).astype(np.uint8)
+        for noise in self.noises:
+            if noise.shape_type == Shape.CIRCLE:
+                circle(self.img, **noise.params)
+            elif noise.shape_type == Shape.RECTANGLE:
+                rectangle(self.img, **noise.params)
+            else:
+                triangle(self.img, **noise.params)
+        for o in self.objects:
+            if o.shape_type == Shape.CIRCLE:
+                circle(self.img, **o.params)
+            elif o.shape_type == Shape.RECTANGLE:
+                rectangle(self.img, **o.params)
+            else:
+                triangle(self.img, **o.params)
 
     def generate(self, noise=False):
         size = self.num_noise if noise else self.num_objects
@@ -137,21 +181,19 @@ class Scene:
 
     def collision(self):
         for i in range(self.objects):
-            for j in range(i+1, self.objects):
-                if self.objects[i].boundMinX == self.objects[j].boundMaxX or self.objects[i].boundMaxX == self.objects[j].boundMinX:
+            for j in range(i + 1, self.objects):
+                if self.objects[i].boundMinX == self.objects[j].boundMaxX or self.objects[i].boundMaxX == self.objects[
+                    j].boundMinX:
                     self.objects[j].velocity[0] = (-1 * self.objects[j].velocity[0] + self.objects[i].velocity[0]) / 2
                     self.objects[i].velocity[0] = (-1 * self.objects[i].velocity[0] + self.objects[j].velocity[0]) / 2
 
                     self.objects[j].velocity[1] *= -1
                     self.objects[i].velocity[1] *= -1
 
-                elif self.objects[i].boundMinY == self.objects[j].boundMaxY or self.objects[i].boundMaxY == self.objects[j].boundMinY:
+                elif self.objects[i].boundMinY == self.objects[j].boundMaxY or self.objects[i].boundMaxY == \
+                        self.objects[j].boundMinY:
                     self.objects[j].velocity[1] = (-1 * self.objects[j].velocity[1] + self.objects[i].velocity[1]) / 2
                     self.objects[i].velocity[1] = (-1 * self.objects[i].velocity[1] + self.objects[j].velocity[1]) / 2
 
                     self.objects[j].velocity[0] *= -1
                     self.objects[i].velocity[0] *= -1
-    
-
-
-
