@@ -37,18 +37,26 @@ class Scene:
                     'centerPt' : (y, x),
                     'radius' : random.uniform(math.sqrt(MIN_SIZE_NOISE/math.pi), math.sqrt(MAX_SIZE_NOISE/math.pi)),
                     'color' : colors[random.randint(0, len(colors.shape[0]))],
-                    'shape' : shape
                 }
                 circle(self.img, **params)
+                self.noises.append(SObject(shape, **params))
 
             elif shape == Shape.RECTANGLE:
+                a = random.randint(int(math.sqrt(MIN_SIZE_NOISE)), int(math.sqrt(MAX_SIZE_NOISE)))
+                b = random.randint(round(MIN_SIZE_NOISE/a), round(MAX_SIZE_NOISE/a))
                 params = {
-                    'centerPt': (y, x),
-                    'radius': random.uniform(math.sqrt(MIN_SIZE_NOISE / math.pi), math.sqrt(MAX_SIZE_NOISE / math.pi)),
+                    'pt1': (y, x),
+                    'pt2': (y + b, x + a),
                     'color': colors[random.randint(0, len(colors.shape[0]))],
-                    'shape': shape
                 }
-                rectangle()
+                rectangle(**params)
+                self.noises.append(SObject(shape, **params))
+
+            else:
+                u = int(math.sqrt(4*MIN_SIZE_NOISE/math.sqrt(3)))
+                v = int(math.sqrt(4*MAX_SIZE_NOISE/math.sqrt(3)))
+                a = random.randint(u, v)
+                b = random.randint()
 
 
 
