@@ -54,7 +54,7 @@ def createVideo(objects):
 
     
 
-    pts = np.array([[100,100],[100,200],[200,150]], np.int32)
+    pts = np.array([[100,100],[100,200],[200,150]], np.int64)
     cv2.fillPoly(img,[pts],(255,255,0))
 
 

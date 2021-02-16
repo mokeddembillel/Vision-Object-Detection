@@ -8,6 +8,9 @@ from backend.utils import colors, rectangle, triangle, circle
 MIN_SIZE_NOISE = 50
 MAX_SIZE_NOISE = 200
 
+def random_color():
+    return [int(x) for x in colors[random.randint(0, colors.shape[0]-1)]]
+
 class Shape(Enum):
     RECTANGLE = auto()
     TRIANGLE = auto()
@@ -38,7 +41,7 @@ class SObject:
 
 class Scene:
     def __init__(self, shape=(), num_noise=10):
-        self.img = np.ones(*shape)
+        self.img = (np.ones(shape) * 255).astype(np.uint8)
         self.num_noise = num_noise
         self.noises = []
         self.objects = []
@@ -47,12 +50,12 @@ class Scene:
         noise_y = np.random.randint(self.img.shape[1], size=(self.num_noise,))
         noise = np.column_stack([noise_x, noise_y])
         for x, y in noise:
-            shape = random.choice(Shape)
+            shape = random.choice(list(Shape))
             if shape == Shape.CIRCLE:
                 params = {
                     'centerPt' : (y, x),
-                    'radius' : random.uniform(math.sqrt(MIN_SIZE_NOISE/math.pi), math.sqrt(MAX_SIZE_NOISE/math.pi)),
-                    'color' : colors[random.randint(0, len(colors.shape[0]))],
+                    'radius' : round(random.uniform(math.sqrt(MIN_SIZE_NOISE/math.pi), math.sqrt(MAX_SIZE_NOISE/math.pi))),
+                    'color' : random_color(),
                 }
                 circle(self.img, **params)
                 self.noises.append(SObject(shape, **params))
@@ -63,18 +66,26 @@ class Scene:
                 params = {
                     'pt1': (y, x),
                     'pt2': (y + b, x + a),
-                    'color': colors[random.randint(0, len(colors.shape[0]))],
+                    'color': random_color(),
                 }
-                rectangle(**params)
+                rectangle(self.img, **params)
                 self.noises.append(SObject(shape, **params))
 
             else:
                 u = int(math.sqrt(4*MIN_SIZE_NOISE/math.sqrt(3)))
                 v = int(math.sqrt(4*MAX_SIZE_NOISE/math.sqrt(3)))
                 a = random.randint(u, v)
-                b = random.randint()
-
-
+                pt1 = (y, x)
+                pt2 = (y, x + a)
+                pt3 = (y + a, x + round(a/2))
+                params = {
+                    'pt1': pt1,
+                    'pt2': pt2,
+                    'pt3' : pt3,
+                    'color': random_color(),
+                }
+                triangle(self.img, **params)
+                self.noises.append(SObject(shape, **params))
 
 
 
