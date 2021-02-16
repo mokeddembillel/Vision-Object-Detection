@@ -4,7 +4,7 @@ from backend.scene import Scene
 
 scene = Scene(shape=(500, 800))
 
-fps = 1/10
+fps = 1/100
 while 1:
     # Zid frame function
     scene.render()
