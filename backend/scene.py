@@ -15,6 +15,8 @@ MAX_SIZE_SHAPE = 2500
 MIN_VELOCITY = 1
 MAX_VELOCITY = 3
 
+UPDATE_NOISE_DELAY = 5
+
 
 def random_color():
     return [int(x) for x in colors[random.randint(0, colors.shape[0] - 1)]]
@@ -42,7 +44,7 @@ class SObject:
         return ['pt1', 'pt2', 'pt3']
 
     def get_points(self):
-        return {x : self.params[x] for x in self.get_keypoints()}
+        return {x: self.params[x] for x in self.get_keypoints()}
 
     def recompute(self):
         if self.shape_type == Shape.RECTANGLE:
@@ -68,7 +70,7 @@ class Scene:
         self.img = (np.ones(shape + (3,)) * 255).astype(np.uint8)
         self.num_noise = num_noise
         self.num_objects = num_objects
-        self.noises : list[SObject] = []
+        self.noises: list[SObject] = []
         self.objects: list[SObject] = []
 
         self.generate(noise=True)
@@ -82,7 +84,7 @@ class Scene:
             d = o.get_points()
             for k, (x, y) in d.items():
                 o.params[k] = (x + max(0, -o.boundMinX) - max(0, o.boundMaxX - self.img.shape[1]),
-                                y + max(0, -o.boundMinY) - max(0, o.boundMaxY - self.img.shape[0]))
+                               y + max(0, -o.boundMinY) - max(0, o.boundMaxY - self.img.shape[0]))
             o.recompute()
         while len(l):
             o1 = l.pop()
