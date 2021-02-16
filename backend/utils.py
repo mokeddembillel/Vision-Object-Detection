@@ -83,11 +83,11 @@ def detect(img, area_th=500):
     return results
 
 
-def rectangle(img, pt1, pt2, color, fill):
-    cv2.rectangle(img, pt1, pt2, color, fill)
+def rectangle(img, pt1, pt2, color):
+    cv2.rectangle(img, pt1, pt2, color, -1)
 
-def circle(img, centerPt, radius, color, fill):
-    cv2.circle(img, centerPt, radius, color, fill)
+def circle(img, centerPt, radius, color):
+    cv2.circle(img, centerPt, radius, color, -1)
 
 def triangle(img, pt1, pt2, pt3, color):
     pts = np.array([pt1, pt2, pt3], np.int32)
