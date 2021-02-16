@@ -76,9 +76,7 @@ def detect(img, area_th=500):
         shape = num_edges2shape[num_edges]
         cog = contour.squeeze().mean(0).astype(np.int)
         color = img[cog[1], cog[0]]
-        print(color)
         color = ((colors - color[::-1])**2).sum(-1).argmin()
-        print(color)
         color = colors[color]
         color = rgb2color[tuple(color)]
         results.append((cog, shape, color))
