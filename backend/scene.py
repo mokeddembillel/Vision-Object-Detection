@@ -12,6 +12,9 @@ MAX_SIZE_NOISE = 100
 MIN_SIZE_SHAPE = 1000
 MAX_SIZE_SHAPE = 2500
 
+MIN_VELOCITY = 1
+MAX_VELOCITY = 3
+
 
 def random_color():
     return [int(x) for x in colors[random.randint(0, colors.shape[0] - 1)]]
@@ -27,7 +30,8 @@ class SObject:
     def __init__(self, shape_type, **params):
         self.shape_type = shape_type
         self.params = params
-        self.velocity = np.random.random((2,))
+        self.velocity = np.array([random.randint(MIN_VELOCITY, MAX_VELOCITY),
+                                  random.randint(MIN_VELOCITY, MAX_VELOCITY)])
 
         if self.shape_type == Shape.RECTANGLE:
             self.boundMinX = self.params['pt1'][0]
