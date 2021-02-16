@@ -1,9 +1,6 @@
 
 .vscode/settings.json
-.idea/workspace.xml
-.idea/Vision-Object-Detection.iml
-.idea/vcs.xml
-.idea/modules.xml
-.idea/misc.xml
+.idea/*
+
 backend/__pycache__/scene.cpython-38.pyc
 backend/__pycache__/utils.cpython-38.pyc
