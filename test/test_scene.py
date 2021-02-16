@@ -4,5 +4,9 @@ from backend.scene import Scene
 
 scene = Scene(shape=(500, 800))
 
-cv2.imshow('sdf', scene.img)
-cv2.waitKey(-1)
+fps = 1/10
+while 1:
+    # Zid frame function
+    scene.render()
+    cv2.imshow('sdf', scene.img)
+    cv2.waitKey(int(fps*1000))
