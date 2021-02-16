@@ -180,8 +180,8 @@ class Scene:
             self.objects.append(o)
 
     def collisions(self):
-        for i in range(self.objects):
-            for j in range(i+1, self.objects):
+        for i in range(len(self.objects)):
+            for j in range(i+1, len(self.objects)):
                 if (self.objects[i].boundMaxX >= self.objects[j].boundMinX and \
                     self.objects[i].boundMaxX <= self.objects[j].boundMaxX) or \
                     (self.objects[i].boundMaxX <= self.objects[j].boundmaxX and \
