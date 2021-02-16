@@ -91,28 +91,14 @@ class Scene:
     def collision(self):
         for i in range(self.objects):
             for j in range(i+1, self.objects):
-                if self.objects[i].boundMinX == self.objects[j].boundMaxX:
+                if self.objects[i].boundMinX == self.objects[j].boundMaxX or self.objects[i].boundMaxX == self.objects[j].boundMinX:
                     self.objects[j].velocity[0] = (-1 * self.objects[j].velocity[0] + self.objects[i].velocity[0]) / 2
                     self.objects[i].velocity[0] = (-1 * self.objects[i].velocity[0] + self.objects[j].velocity[0]) / 2
 
                     self.objects[j].velocity[1] *= -1
                     self.objects[i].velocity[1] *= -1
                     
-                elif self.objects[i].boundMaxX == self.objects[j].boundMinX:
-                    self.objects[j].velocity[0] = (-1 * self.objects[j].velocity[0] + self.objects[i].velocity[0]) / 2
-                    self.objects[i].velocity[0] = (-1 * self.objects[i].velocity[0] + self.objects[j].velocity[0]) / 2
-
-                    self.objects[j].velocity[1] *= -1
-                    self.objects[i].velocity[1] *= -1
-
-                elif self.objects[i].boundMinY == self.objects[j].boundMaxY:
-                    self.objects[j].velocity[1] = (-1 * self.objects[j].velocity[1] + self.objects[i].velocity[1]) / 2
-                    self.objects[i].velocity[1] = (-1 * self.objects[i].velocity[1] + self.objects[j].velocity[1]) / 2
-
-                    self.objects[j].velocity[0] *= -1
-                    self.objects[i].velocity[0] *= -1
-                    
-                elif self.objects[i].boundMaxY == self.objects[j].boundMinY:
+                elif self.objects[i].boundMinY == self.objects[j].boundMaxY or self.objects[i].boundMaxY == self.objects[j].boundMinY:
                     self.objects[j].velocity[1] = (-1 * self.objects[j].velocity[1] + self.objects[i].velocity[1]) / 2
                     self.objects[i].velocity[1] = (-1 * self.objects[i].velocity[1] + self.objects[j].velocity[1]) / 2
 
