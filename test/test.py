@@ -1,5 +1,4 @@
-import cv2
-from utils import *
+from backend.utils import *
 
 img = cv2.imread('j.png')
 
