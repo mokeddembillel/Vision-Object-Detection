@@ -88,7 +88,7 @@ class Scene:
                 self.noises.append(SObject(shape, **params))
                 rectangle()
 
-    def collision():
+    def collision(self):
         for i in range(self.objects):
             for j in range(i+1, self.objects):
                 if self.objects[i].boundMinX == self.objects[j].boundMaxX:
