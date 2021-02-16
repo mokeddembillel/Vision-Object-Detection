@@ -1,15 +1,24 @@
 import math
 import random
+from enum import Enum, auto
 
 import numpy as np
-from enum import Enum, auto
+
 from backend.utils import colors, rectangle, triangle, circle
 
-MIN_SIZE_NOISE = 50
-MAX_SIZE_NOISE = 200
+MIN_SIZE_NOISE = 40
+MAX_SIZE_NOISE = 100
+
+MIN_SIZE_SHAPE = 1000
+MAX_SIZE_SHAPE = 2500
+
+MIN_VELOCITY = 1
+MAX_VELOCITY = 3
+
 
 def random_color():
-    return [int(x) for x in colors[random.randint(0, colors.shape[0]-1)]]
+    return [int(x) for x in colors[random.randint(0, colors.shape[0] - 1)]]
+
 
 class Shape(Enum):
     RECTANGLE = auto()
@@ -21,7 +30,8 @@ class SObject:
     def __init__(self, shape_type, **params):
         self.shape_type = shape_type
         self.params = params
-        self.velocity = np.random.random((2,))
+        self.velocity = np.array([random.randint(MIN_VELOCITY, MAX_VELOCITY),
+                                  random.randint(MIN_VELOCITY, MAX_VELOCITY)])
 
         if self.shape_type == Shape.RECTANGLE:
             self.boundMinX = self.params['pt1'][0]
@@ -39,54 +49,91 @@ class SObject:
             self.boundMinY = self.params['centerPt'][1] - self.params['radius']
             self.boundMaxY = self.params['centerPt'][1] + self.params['radius']
 
+
 class Scene:
-    def __init__(self, shape=(), num_noise=20):
+    def __init__(self, shape=(), num_noise=random.choice(range(16,23)), num_objects=random.choice(range(4,7))):
         self.img = (np.ones(shape + (3,)) * 255).astype(np.uint8)
         self.num_noise = num_noise
+        self.num_objects = num_objects
         self.noises = []
         self.objects = []
 
-        noise_x = np.random.randint(self.img.shape[0], size=(self.num_noise,))
-        noise_y = np.random.randint(self.img.shape[1], size=(self.num_noise,))
-        noise = np.column_stack([noise_x, noise_y])
-        for x, y in noise:
-            shape = Shape.TRIANGLE
+        self.generate(noise=True)
+        self.generate(noise=False)
+
+
+    def generate(self, noise=False):
+        size = self.num_noise if noise else self.num_objects
+        obj_x = np.random.randint(self.img.shape[0], size=(size,))
+        obj_y = np.random.randint(self.img.shape[1], size=(size,))
+        obj_xy = np.column_stack([obj_x, obj_y])
+        shapes = list(Shape)
+
+        # Generating noise
+        for x, y in obj_xy:
+            shape = random.choice(shapes)
             if shape == Shape.CIRCLE:
-                params = {
-                    'centerPt' : (y, x),
-                    'radius' : round(random.uniform(math.sqrt(MIN_SIZE_NOISE/math.pi), math.sqrt(MAX_SIZE_NOISE/math.pi))),
-                    'color' : random_color(),
-                }
-                circle(self.img, **params)
-                self.noises.append(SObject(shape, **params))
+                self.generate_circle((x, y), noise=noise)
 
             elif shape == Shape.RECTANGLE:
-                a = random.randint(int(math.sqrt(MIN_SIZE_NOISE)), int(math.sqrt(MAX_SIZE_NOISE)))
-                b = random.randint(round(MIN_SIZE_NOISE/a), round(MAX_SIZE_NOISE/a))
-                params = {
-                    'pt1': (y, x),
-                    'pt2': (y + b, x + a),
-                    'color': random_color(),
-                }
-                rectangle(self.img, **params)
-                self.noises.append(SObject(shape, **params))
+                self.generate_rectangle((x, y), noise=noise)
 
             else:
-                u = int(math.sqrt(4*MIN_SIZE_NOISE/math.sqrt(3)))
-                v = int(math.sqrt(4*MAX_SIZE_NOISE/math.sqrt(3)))
-                a = random.randint(u, v)
-                pt1 = (y, x)
-                pt2 = (y + a, x)
-                pt3 = (y + round(a/2), np.clip(x - a, 0, self.img.shape[1]))
-                params = {
-                    'pt1': pt1,
-                    'pt2': pt2,
-                    'pt3' : pt3,
-                    'color': random_color(),
-                }
-                triangle(self.img, **params)
-                self.noises.append(SObject(shape, **params))
-                rectangle()
+                self.generate_triangle((x, y), noise=noise)
+
+    def generate_circle(self, pos, noise=False):
+        x, y = pos
+        a, b = (MIN_SIZE_NOISE, MAX_SIZE_NOISE) if noise else (MIN_SIZE_SHAPE, MAX_SIZE_SHAPE)
+        params = {
+            'centerPt': (y, x),
+            'radius': round(random.uniform(math.sqrt(a / math.pi), math.sqrt(b / math.pi))),
+            'color': random_color(),
+        }
+        circle(self.img, **params)
+        o = SObject(Shape.CIRCLE, **params)
+        if noise:
+            self.noises.append(o)
+        else:
+            self.objects.append(o)
+
+    def generate_rectangle(self, pos, noise=False):
+        x, y = pos
+        u, v = (MIN_SIZE_NOISE, MAX_SIZE_NOISE) if noise else (MIN_SIZE_SHAPE, MAX_SIZE_SHAPE)
+        a = random.randint(int(math.sqrt(u)), int(math.sqrt(v)))
+        b = random.randint(round(u / a), round(v / a))
+        params = {
+            'pt1': (y, x),
+            'pt2': (y + b, x + a),
+            'color': random_color(),
+        }
+        rectangle(self.img, **params)
+        o = SObject(Shape.RECTANGLE, **params)
+        if noise:
+            self.noises.append(o)
+        else:
+            self.objects.append(o)
+
+    def generate_triangle(self, pos, noise=False):
+        x, y = pos
+        w, z = (MIN_SIZE_NOISE, MAX_SIZE_NOISE) if noise else (MIN_SIZE_SHAPE, MAX_SIZE_SHAPE)
+        u = int(math.sqrt(4 * w / math.sqrt(3)))
+        v = int(math.sqrt(4 * z / math.sqrt(3)))
+        a = random.randint(u, v)
+        pt1 = (y, x)
+        pt2 = (y + a, x)
+        pt3 = (y + round(a / 2), np.clip(x - a, 0, self.img.shape[1]))
+        params = {
+            'pt1': pt1,
+            'pt2': pt2,
+            'pt3': pt3,
+            'color': random_color(),
+        }
+        triangle(self.img, **params)
+        o = SObject(Shape.TRIANGLE, **params)
+        if noise:
+            self.noises.append(o)
+        else:
+            self.objects.append(o)
 
     def collisions(self):
         for i in range(self.objects):
