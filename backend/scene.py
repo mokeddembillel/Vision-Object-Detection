@@ -88,22 +88,38 @@ class Scene:
                 self.noises.append(SObject(shape, **params))
                 rectangle()
 
-    def collision(self):
+    def collisions(self):
         for i in range(self.objects):
             for j in range(i+1, self.objects):
-                if self.objects[i].boundMinX == self.objects[j].boundMaxX or self.objects[i].boundMaxX == self.objects[j].boundMinX:
+                if (self.objects[i].boundMaxX >= self.objects[j].boundMinX and \
+                    self.objects[i].boundMaxX <= self.objects[j].boundMaxX) or \
+                    (self.objects[i].boundMaxX <= self.objects[j].boundmaxX and \
+                    self.objects[i].boundMinX >= self.objects[j].boundMinX) or \
+                    (self.objects[i].boundMaxX >= self.objects[j].boundmaxX and \
+                    self.objects[i].boundMinX <= self.objects[j].boundMinX):
+                    
                     self.objects[j].velocity[0] = (-1 * self.objects[j].velocity[0] + self.objects[i].velocity[0]) / 2
                     self.objects[i].velocity[0] = (-1 * self.objects[i].velocity[0] + self.objects[j].velocity[0]) / 2
-
-                    self.objects[j].velocity[1] *= -1
-                    self.objects[i].velocity[1] *= -1
                     
-                elif self.objects[i].boundMinY == self.objects[j].boundMaxY or self.objects[i].boundMaxY == self.objects[j].boundMinY:
+                elif (self.objects[i].boundMaxY >= self.objects[j].boundMinY and \
+                    self.objects[i].boundMaxY <= self.objects[j].boundMaxY) or \
+                    (self.objects[i].boundMaxY <= self.objects[j].boundmaxY and \
+                    self.objects[i].boundMinY >= self.objects[j].boundMinY) or \
+                    (self.objects[i].boundMaxY >= self.objects[j].boundmaxY and \
+                    self.objects[i].boundMinY <= self.objects[j].boundMinY):
+
                     self.objects[j].velocity[1] = (-1 * self.objects[j].velocity[1] + self.objects[i].velocity[1]) / 2
                     self.objects[i].velocity[1] = (-1 * self.objects[i].velocity[1] + self.objects[j].velocity[1]) / 2
-
-                    self.objects[j].velocity[0] *= -1
-                    self.objects[i].velocity[0] *= -1
+                    
+        for obj in self.objects:
+            if obj.boundMinX == 0 or obj.boundMaxX == self.img.shape(0) - 1:
+                obj.velocity[0] *= -1
+            elif obj.boundMinY == 0 or obj.boundMaxY == self.img.shape(1) - 1:
+                obj.velocity[1] *= -1
+           
+            
+        
+    
     
 
 
