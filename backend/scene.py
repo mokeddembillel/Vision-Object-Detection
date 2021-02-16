@@ -214,9 +214,9 @@ class Scene:
     def frame(self):
         self.collisions()
         for obj in self.objects:
-            if shape == Shape.CIRCLE:
+            if obj.shape == Shape.CIRCLE:
                 obj.params['centerPt'] = (obj.velocity[0]+obj.params['centerPt'][0], obj.velocity[1]+obj.params['centerPt'][1])
-            elif shape == Shape.RECTANGLE:
+            elif obj.shape == Shape.RECTANGLE:
                 obj.params['pt1'] = (obj.velocity[0]+obj.params['pt1'][0], obj.velocity[1]+obj.params['pt1'][1])
                 obj.params['pt2'] = (obj.velocity[0]+obj.params['pt2'][0], obj.velocity[1]+obj.params['pt2'][1])
             else:
