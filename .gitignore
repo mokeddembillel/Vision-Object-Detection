@@ -5,3 +5,5 @@
 .idea/vcs.xml
 .idea/modules.xml
 .idea/misc.xml
+backend/__pycache__/scene.cpython-38.pyc
+backend/__pycache__/utils.cpython-38.pyc
