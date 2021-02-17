@@ -82,6 +82,9 @@ def detect(img, area_th=500):
         results.append((cog, shape, color))
     return results
 
+def cosinus(v1, v2):
+    return (v1 @ v2) / np.sqrt((v1**2).sum() * (v2**2).sum())
+
 
 def rectangle(img, pt1, pt2, color):
     cv2.rectangle(img, pt1, pt2, color, -1)

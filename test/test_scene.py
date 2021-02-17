@@ -1,16 +1,16 @@
 import cv2
-
+import numpy as np
 from backend.scene import Scene
 
-scene = Scene(shape=(500, 800), empty=False)
+fps = 1/100
+scene = Scene(shape=(500, 800), empty=True)
+scene.generate_circle((250, 50))
+scene.generate_circle((250, 500))
 
-cv2.imshow('org', scene.img)
-cv2.waitKey(-1)
-scene.rectify_boundary_collisions()
-scene.render()
-cv2.imshow('bound', scene.img)
-cv2.waitKey(-1)
-scene.rectify_object_collisions()
-scene.render()
-cv2.imshow('obj', scene.img)
-cv2.waitKey(-1)
+scene.objects[0].velocity = np.array([3, 0])
+scene.objects[1].velocity = np.array([3, 0])
+while 1:
+    scene.render()
+    scene.frame()
+    cv2.imshow('h', scene.img)
+    cv2.waitKey(int(fps*1000))

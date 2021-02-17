@@ -4,7 +4,7 @@ from enum import Enum, auto
 
 import numpy as np
 
-from backend.utils import colors, rectangle, triangle, circle
+from backend.utils import colors, rectangle, triangle, circle, cosinus
 
 MIN_SIZE_NOISE = 40
 MAX_SIZE_NOISE = 100
@@ -35,6 +35,7 @@ class SObject:
         self.velocity = np.array([random.randint(MIN_VELOCITY, MAX_VELOCITY),
                                   random.randint(MIN_VELOCITY, MAX_VELOCITY)])
         self.recompute()
+        self.is_colliding = False
 
     def get_keypoints(self):
         if self.shape_type == Shape.CIRCLE:
@@ -63,6 +64,14 @@ class SObject:
             self.boundMinY = self.params['centerPt'][1] - self.params['radius']
             self.boundMaxY = self.params['centerPt'][1] + self.params['radius']
 
+
+    def velocity_change_collision(self, u):
+        if self.is_colliding:
+            return
+        self.velocity = -self.velocity + 2 * u * np.linalg.norm(self.velocity) / np.linalg.norm(u) * cosinus(self.velocity, u)
+        self.velocity = np.ceil(self.velocity).astype(np.int)
+        self.is_colliding = True
+
     def __cmp__(self, other):
         # if self.boundMinX == other.boundMinX and self.boundMinY == other.boundMinY:
         #     return 0
@@ -85,6 +94,8 @@ class Scene:
         self.num_objects = num_objects
         self.noises: list[SObject] = []
         self.objects: list[SObject] = []
+        self.x_unit = np.array([0, 1])
+        self.y_unit = np.array([1, 0])
 
         if not empty:
             self.generate(noise=True)
@@ -112,7 +123,7 @@ class Scene:
                 for k, (x, y) in o2.get_points().items():
                     o2.params[k] = (x + a, y)
                 o2.recompute()
-                #l.append(o2)
+                # l.append(o2)
 
     def render(self):
         self.img = (np.ones(self.shape + (3,)) * 255).astype(np.uint8)
@@ -204,6 +215,23 @@ class Scene:
         else:
             self.objects.append(o)
 
+    def collisions2(self):
+        for i in range(len(self.objects)):
+            for j in range(i+1, len(self.objects)):
+
+
+        for o in self.objects:
+            if o.boundMinX <= 0 or o.boundMaxX >= self.img.shape[1] - 1:
+                o.velocity_change_collision(self.x_unit)
+
+            elif o.boundMinY <= 0 or o.boundMaxY >= self.img.shape[0] - 1:
+                o.velocity_change_collision(self.y_unit)
+            else:
+                o.is_colliding = False
+
+
+
+
     def collisions(self):
 
         for i in range(len(self.objects)):
@@ -250,8 +278,7 @@ class Scene:
                 obj.velocity[1] *= -1
 
     def frame(self):
-
-        self.collisions()
+        self.collisions2()
         for obj in self.objects:
             if obj.shape_type == Shape.CIRCLE:
                 obj.params['centerPt'] = (
@@ -263,3 +290,4 @@ class Scene:
                 obj.params['pt1'] = (obj.velocity[0] + obj.params['pt1'][0], obj.velocity[1] + obj.params['pt1'][1])
                 obj.params['pt2'] = (obj.velocity[0] + obj.params['pt2'][0], obj.velocity[1] + obj.params['pt2'][1])
                 obj.params['pt3'] = (obj.velocity[0] + obj.params['pt3'][0], obj.velocity[1] + obj.params['pt3'][1])
+            obj.recompute()
