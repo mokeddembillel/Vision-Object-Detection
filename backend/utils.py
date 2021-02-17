@@ -85,6 +85,16 @@ def detect(img, area_th=500):
 def cosinus(v1, v2):
     return (v1 @ v2) / np.sqrt((v1**2).sum() * (v2**2).sum())
 
+def perpendicular(u):
+    if u[0] == 0:
+        return np.array([1, 0])
+    elif u[1] == 0:
+        return np.array([0, 1])
+    a = np.zeros(u.shape)
+    a[0] = 1
+    a[1] = -u[0]/u[1]
+    return a
+
 
 def rectangle(img, pt1, pt2, color):
     cv2.rectangle(img, pt1, pt2, color, -1)

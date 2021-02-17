@@ -4,7 +4,7 @@ from enum import Enum, auto
 
 import numpy as np
 
-from backend.utils import colors, rectangle, triangle, circle, cosinus
+from backend.utils import colors, rectangle, triangle, circle, cosinus, perpendicular
 
 MIN_SIZE_NOISE = 40
 MAX_SIZE_NOISE = 100
@@ -63,6 +63,20 @@ class SObject:
             self.boundMaxX = self.params['centerPt'][0] + self.params['radius']
             self.boundMinY = self.params['centerPt'][1] - self.params['radius']
             self.boundMaxY = self.params['centerPt'][1] + self.params['radius']
+            
+    def is_colliding_with(self, o):
+        if self.shape_type == Shape.CIRCLE and o.shape_type == Shape.CIRCLE:
+            r1, r2 = self.params['radius'], o.params['radius']
+            return np.linalg.norm(np.array(self.params['centerPt']) - np.array(o.params['centerPt'])) < r1 + r2
+        condition_x = (self.boundMinX <= o.boundMaxX <= self.boundMaxX) or \
+        (o.boundMaxX <= self.boundMaxX and \
+         o.boundMinX >= self.boundMinX) or \
+        (self.boundMaxX >= o.boundMinX >= self.boundMinX)
+        condition_y = (self.boundMinY <= o.boundMaxY <= self.boundMaxY) or \
+        (o.boundMaxY <= self.boundMaxY and \
+         o.boundMinY >= self.boundMinY) or \
+        (self.boundMaxY >= o.boundMinY >= self.boundMinY)
+        return condition_x or condition_y
 
 
     def velocity_change_collision(self, u):
@@ -216,10 +230,6 @@ class Scene:
             self.objects.append(o)
 
     def collisions2(self):
-        for i in range(len(self.objects)):
-            for j in range(i+1, len(self.objects)):
-
-
         for o in self.objects:
             if o.boundMinX <= 0 or o.boundMaxX >= self.img.shape[1] - 1:
                 o.velocity_change_collision(self.x_unit)
@@ -228,6 +238,17 @@ class Scene:
                 o.velocity_change_collision(self.y_unit)
             else:
                 o.is_colliding = False
+
+        for i in range(len(self.objects)):
+            for j in range(i+1, len(self.objects)):
+                o1, o2 = self.objects[i], self.objects[j]
+                if o1.is_colliding_with(o2):
+                    o1.velocity_change_collision(perpendicular(o2.velocity))
+                    o2.velocity_change_collision(perpendicular(o1.velocity))
+                else:
+                    o1.is_colliding = any(o.is_colliding_with(o1) for o in self.objects if o is not o1)
+                    o2.is_colliding = any(o.is_colliding_with(o2) for o in self.objects if o is not o2)
+
 
 
 

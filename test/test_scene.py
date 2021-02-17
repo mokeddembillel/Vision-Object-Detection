@@ -5,10 +5,10 @@ from backend.scene import Scene
 fps = 1/100
 scene = Scene(shape=(500, 800), empty=True)
 scene.generate_circle((250, 50))
-scene.generate_circle((250, 500))
+scene.generate_circle((220, 500))
 
 scene.objects[0].velocity = np.array([3, 0])
-scene.objects[1].velocity = np.array([3, 0])
+scene.objects[1].velocity = np.array([-3, 0])
 while 1:
     scene.render()
     scene.frame()
