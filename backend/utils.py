@@ -104,21 +104,21 @@ def detect(img, area_th=500):
     return results
 
 def number_of_edges(contour, coef=0.04):
-    def length(c):
-        if len(c) < 2:
-            return 0
-        return sum(np.linalg.norm(c[i+1] - c[i]) for i in range(len(c)-1))
     contour = contour.squeeze()
     num_edges = 0
     contour = [contour[i] for i in range(contour.shape[0])]
     current = []
+    arc = 0
     for c in contour:
         current.append(c)
-        arc = length(current)
+        if len(current) < 2:
+            continue
+        arc += np.linalg.norm(current[-1] - current[-2])
         d = np.linalg.norm(c - current[0])
         if arc > d*coef:
             num_edges += 1
             current = []
+            arc = 0
     return num_edges + 1
 
 

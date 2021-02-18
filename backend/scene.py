@@ -199,21 +199,22 @@ class Scene:
         obj_xy = np.column_stack([obj_x, obj_y])
 
         if noise:
-            pcolors = np.random.randint(0, colors.shape[0], (size, ))
+            pcolors = colors[np.random.randint(0, colors.shape[0], (size, ))]
         else:
             pcolors = random.sample([c for c in colors], size)
 
         # Generating noise
         for i, (x, y) in enumerate(obj_xy):
+            c = [int(x) for x in pcolors[i]]
             shape = random.choice(self.shape_types)
             if shape == Shape.CIRCLE:
-                self.generate_circle((x, y), noise=noise, color=pcolors[i])
+                self.generate_circle((x, y), noise=noise, color=c)
 
             elif shape == Shape.RECTANGLE:
-                self.generate_rectangle((x, y), noise=noise, color=pcolors[i])
+                self.generate_rectangle((x, y), noise=noise, color=c)
 
             else:
-                self.generate_triangle((x, y), noise=noise, color=pcolors[i])
+                self.generate_triangle((x, y), noise=noise, color=c)
 
     def generate_circle(self, pos, noise=False, color=None):
         x, y = pos
