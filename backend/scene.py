@@ -198,25 +198,30 @@ class Scene:
         obj_y = np.random.randint(self.img.shape[1], size=(size,))
         obj_xy = np.column_stack([obj_x, obj_y])
 
+        if noise:
+            pcolors = np.random.randint(0, colors.shape[0], (size, ))
+        else:
+            pcolors = random.sample([c for c in colors], size)
+
         # Generating noise
-        for x, y in obj_xy:
+        for i, (x, y) in enumerate(obj_xy):
             shape = random.choice(self.shape_types)
             if shape == Shape.CIRCLE:
-                self.generate_circle((x, y), noise=noise)
+                self.generate_circle((x, y), noise=noise, color=pcolors[i])
 
             elif shape == Shape.RECTANGLE:
-                self.generate_rectangle((x, y), noise=noise)
+                self.generate_rectangle((x, y), noise=noise, color=pcolors[i])
 
             else:
-                self.generate_triangle((x, y), noise=noise)
+                self.generate_triangle((x, y), noise=noise, color=pcolors[i])
 
-    def generate_circle(self, pos, noise=False):
+    def generate_circle(self, pos, noise=False, color=None):
         x, y = pos
         a, b = (MIN_SIZE_NOISE, MAX_SIZE_NOISE) if noise else (MIN_SIZE_SHAPE, MAX_SIZE_SHAPE)
         params = {
             'centerPt': (y, x),
             'radius': round(random.uniform(math.sqrt(a / math.pi), math.sqrt(b / math.pi))),
-            'color': random_color(),
+            'color': color,
         }
         circle(self.img, **params)
         o = SObject(Shape.CIRCLE, **params)
@@ -225,7 +230,7 @@ class Scene:
         else:
             self.objects.append(o)
 
-    def generate_rectangle(self, pos, noise=False):
+    def generate_rectangle(self, pos, noise=False, color=None):
         x, y = pos
         u, v = (MIN_SIZE_NOISE, MAX_SIZE_NOISE) if noise else (MIN_SIZE_SHAPE, MAX_SIZE_SHAPE)
         a = random.randint(int(math.sqrt(u)), int(math.sqrt(v)))
@@ -233,7 +238,7 @@ class Scene:
         params = {
             'pt1': (y, x),
             'pt2': (y + b, x + a),
-            'color': random_color(),
+            'color': color,
         }
         rectangle(self.img, **params)
         o = SObject(Shape.RECTANGLE, **params)
@@ -242,7 +247,7 @@ class Scene:
         else:
             self.objects.append(o)
 
-    def generate_triangle(self, pos, noise=False):
+    def generate_triangle(self, pos, noise=False, color=None):
         x, y = pos
         w, z = (MIN_SIZE_NOISE, MAX_SIZE_NOISE) if noise else (MIN_SIZE_SHAPE, MAX_SIZE_SHAPE)
         u = int(math.sqrt(4 * w / math.sqrt(3)))
@@ -255,7 +260,7 @@ class Scene:
             'pt1': pt1,
             'pt2': pt2,
             'pt3': pt3,
-            'color': random_color(),
+            'color': color,
         }
         triangle(self.img, **params)
         o = SObject(Shape.TRIANGLE, **params)
