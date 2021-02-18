@@ -7,8 +7,8 @@ rgb2color = {(255, 0, 0) : 'RED',
              (0, 255, 0) : 'GREEN',
              (0, 0, 255) : 'BLUE',
              (255,255,0) : 'YELLOW',
-             (0,0,0) : 'BLACK',
-             (255,192,203) : 'PINK',
+             (169,169,169) : 'GRAY',
+             (255,20,147) : 'PINK',
              (255,165,0) : 'ORANGE'}
 
 colors = np.array(list(rgb2color.keys()))
