@@ -3,24 +3,13 @@ from collections import defaultdict
 import cv2
 import numpy as np
 
+from backend.colors import rgb2color, colors
+
 num_edges2shape = {
     3 : 'triangle',
     4 : 'rectangle',
 }
 num_edges2shape = defaultdict(lambda:'circle', num_edges2shape)
-
-rgb2color = {(255, 0, 0) : 'RED',
-             (165,42,42) : 'BROWN',
-             (128,0,128) : 'PURPLE',
-             (0,255,255) : 'CYAN',
-             (0, 255, 0) : 'GREEN',
-             (0, 0, 255) : 'BLUE',
-             (255,255,0) : 'YELLOW',
-             (0,0,0) : 'BLACK',
-             (255,192,203) : 'PINK',
-             (255,165,0) : 'ORANGE'}
-
-colors = np.array(list(rgb2color.keys()))
 
 def mean_filter(img, kernel_size=3):
     kernel = np.ones((kernel_size, kernel_size))
@@ -82,6 +71,22 @@ def detect(img, area_th=500):
         results.append((cog, shape, color))
     return results
 
+def cosinus(v1, v2):
+    s = np.sqrt((v1 ** 2).sum() * (v2 ** 2).sum())
+    if s == 0:
+        return 0
+    return (v1 @ v2) / np.sqrt((v1**2).sum() * (v2**2).sum())
+
+def perpendicular(u):
+    if u[0] == 0:
+        return np.array([1, 0])
+    elif u[1] == 0:
+        return np.array([0, 1])
+    a = np.zeros(u.shape)
+    a[0] = 1
+    a[1] = -u[0]/u[1]
+    return a
+
 
 def rectangle(img, pt1, pt2, color):
     cv2.rectangle(img, pt1, pt2, color, -1)
@@ -92,3 +97,19 @@ def circle(img, centerPt, radius, color):
 def triangle(img, pt1, pt2, pt3, color):
     pts = np.array([pt1, pt2, pt3], np.int32)
     cv2.fillPoly(img,[pts], color)
+
+def equation_line(A, B):
+    a = A - B
+    a = a[1] / a[0]
+    b = A[1] - a*A[0]
+    return a, b
+
+def minimum_distance(v, w, p):
+    l2 = ((v - w)**2).sum()
+    if l2 == 0:
+        return np.linalg.norm(p - v)
+    t = max(0, min(1, (p - v) @ (w - v) / l2))
+    projection = v + t * (w - v)
+    return np.linalg.norm(p - projection), projection
+
+
