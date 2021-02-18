@@ -1102,8 +1102,8 @@ class Ui_MainWindow(object):
         self.buttGenerationPlay.clicked.connect(lambda: playGenerationVideo(self))
         self.buttGenerationPause.clicked.connect(lambda: pauseGenerationVideo(self))
 
-        self.buttTrackingLoad.clicked.connect(lambda: loadTracking(self))
-        self.buttTrackingLoad.clicked.connect(lambda: trackTracking(self))
+        self.buttTrackingLoad.clicked.connect(lambda: loadTrackingVideo(self))
+        self.buttTrackingTrack.clicked.connect(lambda: trackTracking(self))
         # END MY EVENT LISTENERS
 
     def playNextFrameGeneration(self):
@@ -1126,7 +1126,7 @@ class Ui_MainWindow(object):
         self.timerGeneration.stop()
 
     def startTimerTracking(self):
-        self.timerTrackingGeneration = QtCore.QTimer()
+        self.timerTracking = QtCore.QTimer()
         self.timerTracking.timeout.connect(self.playNextFrameTracking)
         self.timerTracking.start(1000.0 / self.FPS_tracking)
 
@@ -1138,7 +1138,7 @@ class Ui_MainWindow(object):
             self.now_frame_tracking = 0
 
         image = self.framesTracking[self.now_frame_tracking]
-        showImageIntoTracking(self, image)
+        showImageIntoTracking(self, video.write_info_img(image))
         self.now_frame_tracking += 1
 
 
@@ -1158,6 +1158,10 @@ def loadImage(self):
 
 def prepareFileNameForSave(self):
     fileName = self.dialog.getSaveFileName(self.dialog, "Save image to", "result.png", "*.png")
+    return fileName
+
+def prepareFileNameForSaveVideo(self):
+    fileName = self.dialog.getSaveFileName(self.dialog, "Save video to", "result.avi", "*.avi")
     return fileName
 
 
@@ -1221,6 +1225,9 @@ def loadTrackingVideo(obj):
     frames_list, videoFPS = video.read_video_with_fps(url)
 
     affectToBeTrackedScene(obj, frames=frames_list, fps=videoFPS)
+    if obj.framesTracking is not None and obj.FPS_tracking > 0:
+        image = obj.framesTracking[0]
+        showImageIntoTracking(obj, image)
     print("DONE")
 
 
@@ -1259,7 +1266,16 @@ def playTrackingScene(self):
 
 
 def saveGenerationVideo(self):
-    pass
+    fileName = prepareFileNameForSaveVideo(self)
+    if fileName is None:
+        print("fileName is none... exiting...")
+        return
+
+    fileName = fileName[0]
+    if fileName[-4:].lower() != ".avi":
+        fileName += ".avi"
+
+    video.write_video(fileName, self.framesGeneration, self.FPS_generation)
 
 
 def playGenerationVideo(self):
@@ -1275,12 +1291,8 @@ def loadTracking(self):
     return url[0]
 
 
-def displayVideo(self):
-    pass
-
-
 def trackTracking(self):
-    pass
+    playTrackingScene(self)
 
 
 def showImageIntoOriginal(self):

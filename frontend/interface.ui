@@ -2313,6 +2313,106 @@ border-radius: 20;</string>
 border-radius:5;</string>
       </property>
      </widget>
+     <widget class="QLabel" name="lblButtonGenerate">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>650</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Comic Sans MS</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #8E9297;</string>
+      </property>
+      <property name="text">
+       <string>please wait...</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblButtonGenerate_2">
+      <property name="geometry">
+       <rect>
+        <x>750</x>
+        <y>650</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Comic Sans MS</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #8E9297;</string>
+      </property>
+      <property name="text">
+       <string>please wait...</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblButtonGenerate_3">
+      <property name="geometry">
+       <rect>
+        <x>950</x>
+        <y>650</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Comic Sans MS</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #8E9297;</string>
+      </property>
+      <property name="text">
+       <string>please wait...</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblButtonGenerate_4">
+      <property name="geometry">
+       <rect>
+        <x>1150</x>
+        <y>650</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Comic Sans MS</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #8E9297;</string>
+      </property>
+      <property name="text">
+       <string>please wait...</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabTracking">
      <attribute name="title">
