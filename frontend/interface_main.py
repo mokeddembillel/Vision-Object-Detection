@@ -1194,7 +1194,7 @@ class Ui_MainWindow(object):
         image = self.framesGeneration[self.now_frame_generation]
         showImageIntoGeneration(self, image)
         self.now_frame_generation += 1
-        print(self.now_frame_generation)
+
 
 
     def startTimerGeneration(self):
@@ -1215,7 +1215,7 @@ class Ui_MainWindow(object):
 
     def playNextFrameTracking(self):
 
-        if not self.trackingPaused:
+        if self.trackingPaused:
             return
 
 
@@ -1250,7 +1250,7 @@ def saveTrackedVideo(self):
     for untrackedFrame in self.framesTracking:
         temp_list.append(video.write_info_img(untrackedFrame))
 
-    video.write_video(fileName, untrackedFrame, self.FPS_generation)
+    video.write_video(fileName, temp_list, self.FPS_tracking)
 
 
 def loadImage(self):
@@ -1316,7 +1316,6 @@ def generateGenerationVideo(obj):
 
     scene.MIN_SIZE_NOISE = maxSizeNoise
 
-    print("done")
     obj.lblButtonGenerationGenerate.setText("Please wait...")
 
     frames_list = video.generate_video(
