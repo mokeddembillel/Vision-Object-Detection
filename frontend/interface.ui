@@ -1517,32 +1517,6 @@ border-radius: 20;</string>
      <attribute name="title">
       <string>Video Generation</string>
      </attribute>
-     <widget class="QVideoWidget" name="qVideoGeneration" native="true">
-      <property name="geometry">
-       <rect>
-        <x>540</x>
-        <y>20</y>
-        <width>800</width>
-        <height>500</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>800</width>
-        <height>500</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>800</width>
-        <height>500</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: #202225;
-border-radius: 5;</string>
-      </property>
-     </widget>
      <widget class="QSlider" name="sliderNoiseObjects">
       <property name="geometry">
        <rect>
@@ -2325,37 +2299,25 @@ border-radius: 20;</string>
        <string>Rebound Speed (trolling):</string>
       </property>
      </widget>
+     <widget class="QGraphicsView" name="gViewGeneration">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>20</y>
+        <width>800</width>
+        <height>500</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#202225;
+border-radius:5;</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabTracking">
      <attribute name="title">
       <string>Video Tracking</string>
      </attribute>
-     <widget class="QVideoWidget" name="qVideoTracking" native="true">
-      <property name="geometry">
-       <rect>
-        <x>280</x>
-        <y>50</y>
-        <width>800</width>
-        <height>500</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>800</width>
-        <height>500</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>800</width>
-        <height>500</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: #202225;
-border-radius: 5;</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="buttTrackingLoad">
       <property name="geometry">
        <rect>
@@ -2432,6 +2394,20 @@ border-radius: 20;</string>
        <bool>false</bool>
       </property>
      </widget>
+     <widget class="QGraphicsView" name="gViewTracking">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>40</y>
+        <width>800</width>
+        <height>500</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#202225;
+border-radius:5;</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -2447,14 +2423,6 @@ border-radius: 20;</string>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QVideoWidget</class>
-   <extends>QWidget</extends>
-   <header>PyQt5.QtMultimediaWidgets</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
