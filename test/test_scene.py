@@ -3,7 +3,7 @@ from backend.scene import Scene, Shape
 import numpy as np
 
 fps = 1/100
-scene = Scene(shape=(500, 800), empty=False, shape_types=[Shape.CIRCLE, Shape.TRIANGLE])
+scene = Scene(shape=(500, 800), empty=False, shape_types=[Shape.CIRCLE, Shape.TRIANGLE, Shape.RECTANGLE])
 
 # scene.generate_triangle((450, 250))
 # scene.generate_triangle((250, 250))

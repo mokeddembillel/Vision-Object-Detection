@@ -19,16 +19,31 @@ def mean_filter(img, kernel_size=3):
 
 
 def median_filter(img, kernel_size=3):
-    return cv2.medianBlur(img, kernel_size)
+    c = int((kernel_size-1)/2)
+    img_result = np.zeros(img.shape, dtype=np.uint8)
+    for i in range(c, img.shape[0] - c):
+        for j in range(c, img.shape[1] - c):
+            for k in range(img.shape[2]):
+                focus = img[i-c:i+c, j-c:j+c, k]
+                med = np.median(focus)
+                img_result[i,j,k] = med
+    return img_result
 
 
 def gaussian_filter(img, kernel_size=3, sigma=1):
-    img = cv2.GaussianBlur(img, (kernel_size, kernel_size), sigmaX=sigma)
+    kernel = [1/(sigma*np.sqrt(np.pi*2))*np.exp(-0.5*(x/sigma)**2) for x in range(-int((kernel_size-1)/2), int((kernel_size+1)/2))]
+    kernel = np.array(kernel)
+    kernel = kernel.reshape(kernel_size,1) @ kernel.reshape(1, kernel_size)
+    kernel = kernel / kernel.sum()
+    img = cv2.filter2D(img, 3, kernel).round().astype(np.uint8)
     return img
 
 
 def laplacian(img, kernel_size=3):
-    img = cv2.Laplacian(img, 3, ksize=kernel_size)
+    c = int((kernel_size - 1)/2)
+    kernel = np.ones((kernel_size, kernel_size), dtype=np.int)
+    kernel[c, c] = - kernel.sum() + 1
+    img = cv2.filter2D(img, 3, kernel)
     img -= img.min()
     img = img / img.max() * 255
     img = img.astype(np.uint8)
@@ -36,23 +51,39 @@ def laplacian(img, kernel_size=3):
 
 
 def erosion(img, kernel_size=3):
-    kernel = np.ones((kernel_size, kernel_size), np.uint8)
-    img = cv2.erode(img, kernel, iterations=1)
-    return img
+    c = int((kernel_size - 1) / 2)
+    img_result = np.zeros(img.shape, dtype=np.uint8)
+    for i in range(c, img.shape[0] - c):
+        for j in range(c, img.shape[1] - c):
+            for k in range(img.shape[2]):
+                focus = img[i - c:i + c, j - c:j + c, k]
+                t = focus[c, c]
+                focus[c, c] = 255
+                img_result[i,j,k] = focus[focus == focus.min()][0]
+                focus[c, c] = t
+    return img_result
 
 
 def dilation(img, kernel_size=3):
-    kernel = np.ones((kernel_size, kernel_size), np.uint8)
-    img = cv2.dilate(img, kernel, iterations=1)
-    return img
+    c = int((kernel_size - 1) / 2)
+    img_result = np.zeros(img.shape, dtype=np.uint8)
+    for i in range(c, img.shape[0] - c):
+        for j in range(c, img.shape[1] - c):
+            for k in range(img.shape[2]):
+                focus = img[i - c:i + c, j - c:j + c, k]
+                t = focus[c, c]
+                focus[c, c] = 0
+                img_result[i, j, k] = focus[focus == focus.max()][0]
+                focus[c, c] = t
+    return img_result
 
 
 def gradient(img, kernel_size=3):
-    kernel = np.ones((kernel_size, kernel_size), np.uint8)
-    img = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernel)
-    return img
+    return dilation(img, kernel_size) - erosion(img, kernel_size)
 
 def poly_area(x):
+    if len(x.shape) == 1:
+        return 0
     return 0.5*np.abs(np.dot(x[:,0],np.roll(x[:,1],1))-np.dot(x[:,1],np.roll(x[:,0],1)))
 
 def detect(img, area_th=500):

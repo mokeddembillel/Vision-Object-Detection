@@ -1,5 +1,6 @@
-from backend.video import generate_video, write_video, read_video
+from backend.video import read_video, generate_video, write_video
 
-video = generate_video()
-write_video('test.avi', video, 100)
-read_video('test.avi')
+# video = generate_video()
+# write_video('test.avi', video, 100)
+video = read_video('test.avi')
+write_video('test_annotated.avi', video, 100)
