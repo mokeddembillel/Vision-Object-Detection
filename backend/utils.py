@@ -83,6 +83,9 @@ def detect(img, area_th=500):
     return results
 
 def cosinus(v1, v2):
+    s = np.sqrt((v1 ** 2).sum() * (v2 ** 2).sum())
+    if s == 0:
+        return 0
     return (v1 @ v2) / np.sqrt((v1**2).sum() * (v2**2).sum())
 
 def perpendicular(u):
@@ -105,3 +108,22 @@ def circle(img, centerPt, radius, color):
 def triangle(img, pt1, pt2, pt3, color):
     pts = np.array([pt1, pt2, pt3], np.int32)
     cv2.fillPoly(img,[pts], color)
+
+def equation_line(A, B):
+    a = A - B
+    a = a[1] / a[0]
+    b = A[1] - a*A[0]
+    return a, b
+
+def minimum_distance(v, w, p):
+    # Return minimum distance between line segment vw and point p
+    l2 = ((v - w)**2).sum() # length_squared(v, w)  # i.e. |w-v|^2 -  avoid a sqrt
+    if l2 == 0:
+        return np.linalg.norm(p - v)   # v == w case
+    #  Consider the line extending the segment, parameterized as v + t (w - v).
+    #  We find projection of point p onto the line.
+    #  It falls where t = [(p-v) . (w-v)] / |w-v|^2
+    #  We clamp t from [0,1] to handle points outside the segment vw.
+    t = max(0, min(1, (p - v) @ (w - v) / l2))
+    projection = v + t * (w - v)  # Projection falls on the segment
+    return np.linalg.norm(p - projection), projection

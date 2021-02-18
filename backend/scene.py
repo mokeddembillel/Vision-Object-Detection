@@ -4,7 +4,7 @@ from enum import Enum, auto
 
 import numpy as np
 
-from backend.utils import colors, rectangle, triangle, circle, cosinus, perpendicular
+from backend.utils import colors, rectangle, triangle, circle, cosinus, perpendicular, minimum_distance
 
 MIN_SIZE_NOISE = 40
 MAX_SIZE_NOISE = 100
@@ -12,10 +12,12 @@ MAX_SIZE_NOISE = 100
 MIN_SIZE_SHAPE = 1000
 MAX_SIZE_SHAPE = 2500
 
-MIN_VELOCITY = 1
+MIN_VELOCITY = 2
 MAX_VELOCITY = 3
 
 UPDATE_NOISE_DELAY = 60
+
+SCENE = None
 
 
 def random_color():
@@ -63,45 +65,77 @@ class SObject:
             self.boundMaxX = self.params['centerPt'][0] + self.params['radius']
             self.boundMinY = self.params['centerPt'][1] - self.params['radius']
             self.boundMaxY = self.params['centerPt'][1] + self.params['radius']
-            
-    def is_colliding_with(self, o):
+
+    def is_colliding_with_object(self, o):
         if self.shape_type == Shape.CIRCLE and o.shape_type == Shape.CIRCLE:
             r1, r2 = self.params['radius'], o.params['radius']
-            return np.linalg.norm(np.array(self.params['centerPt']) - np.array(o.params['centerPt'])) < r1 + r2
-        condition_x = (self.boundMinX <= o.boundMaxX <= self.boundMaxX) or \
-        (o.boundMaxX <= self.boundMaxX and \
-         o.boundMinX >= self.boundMinX) or \
-        (self.boundMaxX >= o.boundMinX >= self.boundMinX)
-        condition_y = (self.boundMinY <= o.boundMaxY <= self.boundMaxY) or \
-        (o.boundMaxY <= self.boundMaxY and \
-         o.boundMinY >= self.boundMinY) or \
-        (self.boundMaxY >= o.boundMinY >= self.boundMinY)
-        return condition_x or condition_y
+            c1, c2 = np.array(self.params['centerPt']), np.array(o.params['centerPt'])
+            d = c2 - c1
+            norm_d = np.linalg.norm(d)
+            u = d / norm_d if norm_d != 0 else 0
+            u = c1 + u * r1
+            return norm_d < r1 + r2, u
+        if self.shape_type == Shape.CIRCLE and o.shape_type == Shape.RECTANGLE:
+            def intersect_circle(center, radius, A, B):
+                d, p = minimum_distance(A, B, center)
+                return d < radius, p
 
+            A, C = np.array(o.params['pt1']), np.array(o.params['pt2'])
+            w, h = C - A
+            B, D = np.array([0, h]) + A, np.array([w, 0]) + A
+            P, r = np.array(self.params['centerPt']), self.params['radius']
+            if 0 <= (P - A) @ (B - A) <= (B - A) @ (B - A) and 0 <= (P - A) @ (D - A) <= (D - A) @ (D - A):
+                return True, o.cog()
+            for X, Y in [(A, B), (B, C), (C, D), (D, A)]:
+                c, p = intersect_circle(P, r, X, Y)
+                if c:
+                    return c, p
+            return False, None
 
-    def velocity_change_collision(self, u):
-        if self.is_colliding:
-            return
-        self.velocity = -self.velocity + 2 * u * np.linalg.norm(self.velocity) / np.linalg.norm(u) * cosinus(self.velocity, u)
-        self.velocity = np.ceil(self.velocity).astype(np.int)
-        self.is_colliding = True
+        if self.shape_type in [Shape.RECTANGLE, Shape.TRIANGLE] and o.shape_type in [Shape.RECTANGLE, Shape.TRIANGLE]:
+            if self.boundMaxX < o.boundMinX or o.boundMaxX < self.boundMinX or \
+                    self.boundMaxY < o.boundMinY or o.boundMaxY < self.boundMinY:
+                return False, None
 
-    def __cmp__(self, other):
-        # if self.boundMinX == other.boundMinX and self.boundMinY == other.boundMinY:
-        #     return 0
-        # if self.boundMinX > other.boundMinX:
-        #     return 1
-        # if self.boundMinY > other.boundMinY:
-        #     return 1
-        # return -1
-        return self.boundMinX**2 + self.boundMinY**2 - (other.boundMinX**2 + other.boundMinY**2)
+            return True, (self.cog() - o.cog()) / 2
 
-    def __lt__(self, other):
-        return self.__cmp__(other) < 0
+        if self.shape_type == Shape.TRIANGLE and o.shape_type == Shape.CIRCLE:
+            def intersect_circle(center, radius, A, B):
+                d, p = minimum_distance(A, B, center)
+                return d < radius, p
+
+            A, B, C = np.array(list(self.get_points().values()))
+            P, r = np.array(o.params['centerPt']), o.params['radius']
+            if 0 <= (P - A) @ (B - A) <= (B - A) @ (B - A) and 0 <= (P - A) @ (C - A) <= (C - A) @ (C - A):
+                return True, o.cog()
+            for X, Y in [(A, B), (B, C), (C, A)]:
+                c, p = intersect_circle(P, r, X, Y)
+                if c:
+                    return c, p
+            return False, None
+
+        return o.is_colliding_with_object(self)
+
+    def is_colliding_with(self):
+        try:
+            l = [(x, self.is_colliding_with_object(x)) for x in SCENE.objects if x is not self]
+            l = [x for x in l if x[1][0]][0]
+            return l
+        except IndexError:
+            return None, (False, None)
+
+    def velocity_change_collision(self, u, coef=1):
+        self.velocity = -self.velocity + 2 * u * np.linalg.norm(self.velocity) / np.linalg.norm(u) * cosinus(
+            self.velocity, u)
+        self.velocity = coef * np.ceil(self.velocity).astype(np.int)
+
+    def cog(self):
+        return np.array(list(self.get_points().values())).mean(0)
 
 
 class Scene:
-    def __init__(self, shape=(), num_noise=random.choice(range(16, 23)), num_objects=random.choice(range(4, 7)), empty=False):
+    def __init__(self, shape=(), num_noise=random.choice(range(16, 23)), num_objects=random.choice(range(4, 7)),
+                 empty=False, shape_types=list(Shape)):
         self.shape = shape
         self.img = (np.ones(shape + (3,)) * 255).astype(np.uint8)
         self.num_noise = num_noise
@@ -110,12 +144,13 @@ class Scene:
         self.objects: list[SObject] = []
         self.x_unit = np.array([0, 1])
         self.y_unit = np.array([1, 0])
+        global SCENE
+        SCENE = self
+        self.shape_types = shape_types
 
         if not empty:
             self.generate(noise=True)
             self.generate(noise=False)
-
-        #self.rectify_boundary_collisions()
 
     def rectify_boundary_collisions(self):
         l = self.objects.copy()
@@ -161,11 +196,10 @@ class Scene:
         obj_x = np.random.randint(self.img.shape[0], size=(size,))
         obj_y = np.random.randint(self.img.shape[1], size=(size,))
         obj_xy = np.column_stack([obj_x, obj_y])
-        shapes = list(Shape)
 
         # Generating noise
         for x, y in obj_xy:
-            shape = random.choice(shapes)
+            shape = random.choice(self.shape_types)
             if shape == Shape.CIRCLE:
                 self.generate_circle((x, y), noise=noise)
 
@@ -229,81 +263,46 @@ class Scene:
         else:
             self.objects.append(o)
 
-    def collisions2(self):
+    def collisions(self):
         for o in self.objects:
+            oo, (o_colliding, pos) = o.is_colliding_with()
             if o.boundMinX <= 0 or o.boundMaxX >= self.img.shape[1] - 1:
-                o.velocity_change_collision(self.x_unit)
+                if not o.is_colliding:
+                    o.velocity_change_collision(self.x_unit)
+                    o.is_colliding = True
 
             elif o.boundMinY <= 0 or o.boundMaxY >= self.img.shape[0] - 1:
-                o.velocity_change_collision(self.y_unit)
+                if not o.is_colliding:
+                    o.velocity_change_collision(self.y_unit)
+                    o.is_colliding = True
+
+            elif o_colliding:
+                if not o.is_colliding:
+                    if o.shape_type in [Shape.RECTANGLE, Shape.TRIANGLE]:
+                        pos = max(self.x_unit, self.y_unit, key=lambda x: cosinus(x, pos))
+                    else:
+                        pos = np.array(o.cog()) - pos
+                    cos = 1 if cosinus(o.velocity, pos) >= 0 else -1
+                    o.velocity_change_collision(perpendicular(pos), -cos)
+                    o.is_colliding = True
+
             else:
                 o.is_colliding = False
 
-        for i in range(len(self.objects)):
-            for j in range(i+1, len(self.objects)):
-                o1, o2 = self.objects[i], self.objects[j]
-                if o1.is_colliding_with(o2):
-                    o1.velocity_change_collision(perpendicular(o2.velocity))
-                    o2.velocity_change_collision(perpendicular(o1.velocity))
-                else:
-                    o1.is_colliding = any(o.is_colliding_with(o1) for o in self.objects if o is not o1)
-                    o2.is_colliding = any(o.is_colliding_with(o2) for o in self.objects if o is not o2)
-
-
-
-
-
-    def collisions(self):
-
-        for i in range(len(self.objects)):
-            for j in range(i + 1, len(self.objects)):
-                # print((self.objects[i].boundMaxX >= self.objects[j].boundMinX and \
-                #     self.objects[i].boundMaxX <= self.objects[j].boundMaxX) or \
-                #     (self.objects[i].boundMaxX <= self.objects[j].boundMaxX and \
-                #     self.objects[i].boundMinX >= self.objects[j].boundMinX) or \
-                #     (self.objects[i].boundMaxX >= self.objects[j].boundMaxX and \
-                #     self.objects[i].boundMinX <= self.objects[j].boundMinX))
-                # print((self.objects[i].boundMaxY >= self.objects[j].boundMinY and \
-                #     self.objects[i].boundMaxY <= self.objects[j].boundMaxY) or \
-                #     (self.objects[i].boundMaxY <= self.objects[j].boundMaxY and \
-                #     self.objects[i].boundMinY >= self.objects[j].boundMinY) or \
-                #     (self.objects[i].boundMaxY >= self.objects[j].boundMaxY and \
-                #     self.objects[i].boundMinY <= self.objects[j].boundMinY))
-                if (self.objects[i].boundMaxX >= self.objects[j].boundMinX and \
-                    self.objects[i].boundMaxX <= self.objects[j].boundMaxX) or \
-                        (self.objects[i].boundMaxX <= self.objects[j].boundMaxX and \
-                         self.objects[i].boundMinX >= self.objects[j].boundMinX) or \
-                        (self.objects[i].boundMaxX >= self.objects[j].boundMaxX and \
-                         self.objects[i].boundMinX <= self.objects[j].boundMinX):
-
-                    self.objects[j].velocity[0] = (-1 * self.objects[j].velocity[0] + self.objects[i].velocity[0]) // 2
-                    self.objects[i].velocity[0] = (-1 * self.objects[i].velocity[0] + self.objects[j].velocity[0]) // 2
-
-                elif (self.objects[i].boundMaxY >= self.objects[j].boundMinY and \
-                      self.objects[i].boundMaxY <= self.objects[j].boundMaxY) or \
-                        (self.objects[i].boundMaxY <= self.objects[j].boundMaxY and \
-                         self.objects[i].boundMinY >= self.objects[j].boundMinY) or \
-                        (self.objects[i].boundMaxY >= self.objects[j].boundMaxY and \
-                         self.objects[i].boundMinY <= self.objects[j].boundMinY):
-
-                    self.objects[j].velocity[1] = (-1 * self.objects[j].velocity[1] + self.objects[i].velocity[1]) // 2
-                    self.objects[i].velocity[1] = (-1 * self.objects[i].velocity[1] + self.objects[j].velocity[1]) // 2
-
-        for obj in self.objects:
-            # print(obj.boundMinX == 0 or obj.boundMaxX == self.img.shape[0] - 1)
-            # print(obj.boundMinY == 0 or obj.boundMaxY == self.img.shape[1] - 1)
-            if obj.boundMinX == 0 or obj.boundMaxX == self.img.shape[0] - 1:
-                obj.velocity[0] *= -1
-
-            elif obj.boundMinY == 0 or obj.boundMaxY == self.img.shape[1] - 1:
-                obj.velocity[1] *= -1
+            if o.boundMaxX <= 0 or o.boundMinX >= self.img.shape[1] - 1 or o.boundMaxY <= 0 or o.boundMinY >= \
+                    self.img.shape[0] - 1:
+                center = (np.array(self.shape) / 2).astype(np.int)[::-1]
+                cog = o.cog()
+                d = center - cog
+                d = d / np.linalg.norm(d) * np.linalg.norm(o.velocity)
+                o.velocity = np.ceil(d).astype(np.int)
 
     def frame(self):
-        self.collisions2()
+        self.collisions()
         for obj in self.objects:
             if obj.shape_type == Shape.CIRCLE:
                 obj.params['centerPt'] = (
-                obj.velocity[0] + obj.params['centerPt'][0], obj.velocity[1] + obj.params['centerPt'][1])
+                    obj.velocity[0] + obj.params['centerPt'][0], obj.velocity[1] + obj.params['centerPt'][1])
             elif obj.shape_type == Shape.RECTANGLE:
                 obj.params['pt1'] = (obj.velocity[0] + obj.params['pt1'][0], obj.velocity[1] + obj.params['pt1'][1])
                 obj.params['pt2'] = (obj.velocity[0] + obj.params['pt2'][0], obj.velocity[1] + obj.params['pt2'][1])
