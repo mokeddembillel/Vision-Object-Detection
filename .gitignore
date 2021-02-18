@@ -2,5 +2,5 @@
 .vscode/settings.json
 .idea/*
 
-backend/__pycache__/scene.cpython-38.pyc
-backend/__pycache__/utils.cpython-38.pyc
+*/__pycache__/*
+*.bat
