@@ -45,6 +45,15 @@ def read_video(path):
         # cv2.waitKey(10)
     return video
 
+def read_video_with_fps(path):
+
+    video = read_video(path)
+    cap = cv2.VideoCapture(path)
+    fps = cap.get(cv2.CAP_PROP_FPS)
+
+    return video, fps
+
+
 
 def write_info_img(img):
     result = detect(img)
