@@ -9,15 +9,11 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtMultimediaWidgets import QVideoWidget
 import backend.utils as utils
 import backend.video as video
 import backend.scene as scene
 import cv2
 import os
-
-
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -1306,6 +1302,7 @@ def saveImage(self, num):
 
 
 def generateGenerationVideo(obj):
+    obj.lblButtonGenerationGenerate.setText("Please wait...")
     numNoiseObjects = obj.sliderNoiseObjects.value()
     maxSizeNoise = obj.sliderNoiseMaxSize.value()
     numObjects = obj.sliderNumObjects.value()
@@ -1315,8 +1312,6 @@ def generateGenerationVideo(obj):
     reboundSpeed = obj.sliderReboundSpeed.value()
 
     scene.MIN_SIZE_NOISE = maxSizeNoise
-
-    obj.lblButtonGenerationGenerate.setText("Please wait...")
 
     frames_list = video.generate_video(
         num_noises=numNoiseObjects,
@@ -1395,6 +1390,12 @@ def saveGenerationVideo(self):
 
 
 def playGenerationVideo(self):
+
+    if self.framesGeneration is None:
+        self.lblButtonGenerationPause.setText("")
+        self.lblButtonGenerationPlay.setText("")
+
+
     self.lblButtonGenerationPause.setText("")
     self.lblButtonGenerationPlay.setText("Video playing")
     playGeneratedScene(self)
