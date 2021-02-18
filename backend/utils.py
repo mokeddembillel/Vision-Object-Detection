@@ -3,24 +3,13 @@ from collections import defaultdict
 import cv2
 import numpy as np
 
+from backend.colors import rgb2color, colors
+
 num_edges2shape = {
     3 : 'triangle',
     4 : 'rectangle',
 }
 num_edges2shape = defaultdict(lambda:'circle', num_edges2shape)
-
-rgb2color = {(255, 0, 0) : 'RED',
-             (165,42,42) : 'BROWN',
-             (128,0,128) : 'PURPLE',
-             (0,255,255) : 'CYAN',
-             (0, 255, 0) : 'GREEN',
-             (0, 0, 255) : 'BLUE',
-             (255,255,0) : 'YELLOW',
-             (0,0,0) : 'BLACK',
-             (255,192,203) : 'PINK',
-             (255,165,0) : 'ORANGE'}
-
-colors = np.array(list(rgb2color.keys()))
 
 def mean_filter(img, kernel_size=3):
     kernel = np.ones((kernel_size, kernel_size))
@@ -116,14 +105,11 @@ def equation_line(A, B):
     return a, b
 
 def minimum_distance(v, w, p):
-    # Return minimum distance between line segment vw and point p
-    l2 = ((v - w)**2).sum() # length_squared(v, w)  # i.e. |w-v|^2 -  avoid a sqrt
+    l2 = ((v - w)**2).sum()
     if l2 == 0:
-        return np.linalg.norm(p - v)   # v == w case
-    #  Consider the line extending the segment, parameterized as v + t (w - v).
-    #  We find projection of point p onto the line.
-    #  It falls where t = [(p-v) . (w-v)] / |w-v|^2
-    #  We clamp t from [0,1] to handle points outside the segment vw.
+        return np.linalg.norm(p - v)
     t = max(0, min(1, (p - v) @ (w - v) / l2))
-    projection = v + t * (w - v)  # Projection falls on the segment
+    projection = v + t * (w - v)
     return np.linalg.norm(p - projection), projection
+
+

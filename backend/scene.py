@@ -4,7 +4,8 @@ from enum import Enum, auto
 
 import numpy as np
 
-from backend.utils import colors, rectangle, triangle, circle, cosinus, perpendicular, minimum_distance
+from backend.utils import rectangle, triangle, circle, cosinus, perpendicular, minimum_distance
+from backend.colors import colors
 
 MIN_SIZE_NOISE = 40
 MAX_SIZE_NOISE = 100
