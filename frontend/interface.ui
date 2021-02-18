@@ -59,7 +59,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>4</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -2313,7 +2313,7 @@ border-radius: 20;</string>
 border-radius:5;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblButtonGenerate">
+     <widget class="QLabel" name="lblButtonGenerationGenerate">
       <property name="geometry">
        <rect>
         <x>550</x>
@@ -2332,13 +2332,13 @@ border-radius:5;</string>
        <string notr="true">color: #8E9297;</string>
       </property>
       <property name="text">
-       <string>please wait...</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="lblButtonGenerate_2">
+     <widget class="QLabel" name="lblButtonGenerationPause">
       <property name="geometry">
        <rect>
         <x>750</x>
@@ -2357,13 +2357,13 @@ border-radius:5;</string>
        <string notr="true">color: #8E9297;</string>
       </property>
       <property name="text">
-       <string>please wait...</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="lblButtonGenerate_3">
+     <widget class="QLabel" name="lblButtonGenerationPlay">
       <property name="geometry">
        <rect>
         <x>950</x>
@@ -2382,13 +2382,13 @@ border-radius:5;</string>
        <string notr="true">color: #8E9297;</string>
       </property>
       <property name="text">
-       <string>please wait...</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="lblButtonGenerate_4">
+     <widget class="QLabel" name="lblButtonGenerationSave">
       <property name="geometry">
        <rect>
         <x>1150</x>
@@ -2407,7 +2407,7 @@ border-radius:5;</string>
        <string notr="true">color: #8E9297;</string>
       </property>
       <property name="text">
-       <string>please wait...</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -2421,8 +2421,8 @@ border-radius:5;</string>
      <widget class="QPushButton" name="buttTrackingLoad">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>570</y>
+        <x>290</x>
+        <y>550</y>
         <width>181</width>
         <height>81</height>
        </rect>
@@ -2459,8 +2459,8 @@ border-radius: 20;</string>
      <widget class="QPushButton" name="buttTrackingTrack">
       <property name="geometry">
        <rect>
-        <x>690</x>
-        <y>570</y>
+        <x>490</x>
+        <y>550</y>
         <width>181</width>
         <height>81</height>
        </rect>
@@ -2482,7 +2482,7 @@ color: #8E9297;
 border-radius: 20;</string>
       </property>
       <property name="text">
-       <string>Track</string>
+       <string>Track y/n</string>
       </property>
       <property name="autoDefault">
        <bool>false</bool>
@@ -2506,6 +2506,82 @@ border-radius: 20;</string>
       <property name="styleSheet">
        <string notr="true">background-color:#202225;
 border-radius:5;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttTrackingPlay">
+      <property name="geometry">
+       <rect>
+        <x>690</x>
+        <y>550</y>
+        <width>181</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Comic Sans MS</family>
+        <pointsize>18</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #202225;
+color: #8E9297;
+border-radius: 20;</string>
+      </property>
+      <property name="text">
+       <string>Play/pause</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttTrackingSave">
+      <property name="geometry">
+       <rect>
+        <x>890</x>
+        <y>550</y>
+        <width>181</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Comic Sans MS</family>
+        <pointsize>18</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #202225;
+color: #8E9297;
+border-radius: 20;</string>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
      </widget>
     </widget>

@@ -56,6 +56,7 @@ def read_video_with_fps(path):
 
 
 def write_info_img(img):
+    img = img.copy()
     result = detect(img)
     for cog, shape, color in result:
         text = str(shape) + ' : ' + str(color)
