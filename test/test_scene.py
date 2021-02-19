@@ -2,14 +2,18 @@ import cv2
 from backend.scene import Scene, Shape
 from backend.video import write_info_img
 import numpy as np
+from backend.colors import rgb2color
 
 fps = 1/100
-scene = Scene(shape=(500, 800), empty=False, shape_types=[Shape.CIRCLE, Shape.TRIANGLE, Shape.RECTANGLE])
+scene = Scene(shape=(500, 800), empty=True, shape_types=[Shape.CIRCLE, Shape.TRIANGLE, Shape.RECTANGLE])
 
-# scene.generate_triangle((450, 250))
+
+color2rgb = {v:k for k,v in rgb2color.items()}
+color = color2rgb['RED']
+scene.generate_triangle((10, 10), color=color)
 # scene.generate_triangle((250, 250))
-#
-# scene.objects[0].velocity = np.array([0, 4])
+
+scene.objects[0].velocity = np.array([0, 4])
 # scene.objects[1].velocity = np.array([0, -4])
 
 while 1:

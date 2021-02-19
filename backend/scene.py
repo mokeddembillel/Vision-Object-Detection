@@ -205,7 +205,7 @@ class Scene:
 
         # Generating noise
         for i, (x, y) in enumerate(obj_xy):
-            c = [int(x) for x in pcolors[i]]
+            c = [int(x) for x in pcolors[i]][::-1]
             shape = random.choice(self.shape_types)
             if shape == Shape.CIRCLE:
                 self.generate_circle((x, y), noise=noise, color=c)
@@ -256,7 +256,7 @@ class Scene:
         a = random.randint(u, v)
         pt1 = (y, x)
         pt2 = (y + a, x)
-        pt3 = (y + round(a / 2), np.clip(x - a, 0, self.img.shape[1]))
+        pt3 = (y + round(a / 2), x - a)
         params = {
             'pt1': pt1,
             'pt2': pt2,
