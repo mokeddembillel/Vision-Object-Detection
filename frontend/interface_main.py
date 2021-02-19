@@ -1196,7 +1196,7 @@ class Ui_MainWindow(object):
     def startTimerGeneration(self):
         self.timerGeneration = QtCore.QTimer()
         self.timerGeneration.timeout.connect(self.playNextFrameGeneration)
-        self.timerGeneration.start(1000.0 / self.FPS_generation)
+        self.timerGeneration.start(int(1000.0 / self.FPS_generation))
 
     def pauseTimerGeneration(self):
         self.timerGeneration.stop()
@@ -1204,7 +1204,7 @@ class Ui_MainWindow(object):
     def startTimerTracking(self):
         self.timerTracking = QtCore.QTimer()
         self.timerTracking.timeout.connect(self.playNextFrameTracking)
-        self.timerTracking.start(1000.0 / self.FPS_tracking)
+        self.timerTracking.start(int(1000.0 / self.FPS_tracking))
 
     def pauseTimerTracking(self):
         self.timerTracking.stop()
