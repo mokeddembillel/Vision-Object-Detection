@@ -10,12 +10,11 @@ def generate_video(resolution=(500, 800), time=10, fps=100, num_objects=5, num_n
     # time and delay in seconds
     backend.scene.MAX_SIZE_NOISE = maxSizeNoise
     delay_change_noise = int(delay_change_noise * fps)
-    fps = 1 / fps
     scene = Scene(shape=resolution, num_objects=num_objects, num_noise=num_noises, empty=True, shape_types=shape_types)
     scene.generate(noise=True)
     scene.generate(noise=False)
     video = []
-    for i in range(int(time / fps)):
+    for i in range(time * fps):
         if i % delay_change_noise == 0:
             scene.noises = []
             scene.generate(noise=True)
