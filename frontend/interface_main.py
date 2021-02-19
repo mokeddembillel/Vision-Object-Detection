@@ -9,15 +9,11 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtMultimediaWidgets import QVideoWidget
 import backend.utils as utils
 import backend.video as video
 import backend.scene as scene
 import cv2
 import os
-
-
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -892,11 +888,51 @@ class Ui_MainWindow(object):
         self.gViewGeneration.setStyleSheet("background-color:#202225;\n"
 "border-radius:5;")
         self.gViewGeneration.setObjectName("gViewGeneration")
+        self.lblButtonGenerationGenerate = QtWidgets.QLabel(self.tabGeneration)
+        self.lblButtonGenerationGenerate.setGeometry(QtCore.QRect(550, 650, 181, 31))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        self.lblButtonGenerationGenerate.setFont(font)
+        self.lblButtonGenerationGenerate.setStyleSheet("color: #8E9297;")
+        self.lblButtonGenerationGenerate.setText("")
+        self.lblButtonGenerationGenerate.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblButtonGenerationGenerate.setObjectName("lblButtonGenerationGenerate")
+        self.lblButtonGenerationPause = QtWidgets.QLabel(self.tabGeneration)
+        self.lblButtonGenerationPause.setGeometry(QtCore.QRect(750, 650, 181, 31))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        self.lblButtonGenerationPause.setFont(font)
+        self.lblButtonGenerationPause.setStyleSheet("color: #8E9297;")
+        self.lblButtonGenerationPause.setText("")
+        self.lblButtonGenerationPause.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblButtonGenerationPause.setObjectName("lblButtonGenerationPause")
+        self.lblButtonGenerationPlay = QtWidgets.QLabel(self.tabGeneration)
+        self.lblButtonGenerationPlay.setGeometry(QtCore.QRect(950, 650, 181, 31))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        self.lblButtonGenerationPlay.setFont(font)
+        self.lblButtonGenerationPlay.setStyleSheet("color: #8E9297;")
+        self.lblButtonGenerationPlay.setText("")
+        self.lblButtonGenerationPlay.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblButtonGenerationPlay.setObjectName("lblButtonGenerationPlay")
+        self.lblButtonGenerationSave = QtWidgets.QLabel(self.tabGeneration)
+        self.lblButtonGenerationSave.setGeometry(QtCore.QRect(1150, 650, 181, 31))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        self.lblButtonGenerationSave.setFont(font)
+        self.lblButtonGenerationSave.setStyleSheet("color: #8E9297;")
+        self.lblButtonGenerationSave.setText("")
+        self.lblButtonGenerationSave.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblButtonGenerationSave.setObjectName("lblButtonGenerationSave")
         self.tabWidget.addTab(self.tabGeneration, "")
         self.tabTracking = QtWidgets.QWidget()
         self.tabTracking.setObjectName("tabTracking")
         self.buttTrackingLoad = QtWidgets.QPushButton(self.tabTracking)
-        self.buttTrackingLoad.setGeometry(QtCore.QRect(490, 570, 181, 81))
+        self.buttTrackingLoad.setGeometry(QtCore.QRect(290, 550, 181, 81))
         font = QtGui.QFont()
         font.setFamily("Comic Sans MS")
         font.setPointSize(18)
@@ -912,7 +948,7 @@ class Ui_MainWindow(object):
         self.buttTrackingLoad.setFlat(False)
         self.buttTrackingLoad.setObjectName("buttTrackingLoad")
         self.buttTrackingTrack = QtWidgets.QPushButton(self.tabTracking)
-        self.buttTrackingTrack.setGeometry(QtCore.QRect(690, 570, 181, 81))
+        self.buttTrackingTrack.setGeometry(QtCore.QRect(490, 550, 181, 81))
         font = QtGui.QFont()
         font.setFamily("Comic Sans MS")
         font.setPointSize(18)
@@ -932,6 +968,38 @@ class Ui_MainWindow(object):
         self.gViewTracking.setStyleSheet("background-color:#202225;\n"
 "border-radius:5;")
         self.gViewTracking.setObjectName("gViewTracking")
+        self.buttTrackingPlay = QtWidgets.QPushButton(self.tabTracking)
+        self.buttTrackingPlay.setGeometry(QtCore.QRect(690, 550, 181, 81))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(18)
+        font.setBold(True)
+        font.setWeight(75)
+        self.buttTrackingPlay.setFont(font)
+        self.buttTrackingPlay.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.buttTrackingPlay.setStyleSheet("background-color: #202225;\n"
+"color: #8E9297;\n"
+"border-radius: 20;")
+        self.buttTrackingPlay.setAutoDefault(False)
+        self.buttTrackingPlay.setDefault(False)
+        self.buttTrackingPlay.setFlat(False)
+        self.buttTrackingPlay.setObjectName("buttTrackingPlay")
+        self.buttTrackingSave = QtWidgets.QPushButton(self.tabTracking)
+        self.buttTrackingSave.setGeometry(QtCore.QRect(890, 550, 181, 81))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(18)
+        font.setBold(True)
+        font.setWeight(75)
+        self.buttTrackingSave.setFont(font)
+        self.buttTrackingSave.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.buttTrackingSave.setStyleSheet("background-color: #202225;\n"
+"color: #8E9297;\n"
+"border-radius: 20;")
+        self.buttTrackingSave.setAutoDefault(False)
+        self.buttTrackingSave.setDefault(False)
+        self.buttTrackingSave.setFlat(False)
+        self.buttTrackingSave.setObjectName("buttTrackingSave")
         self.tabWidget.addTab(self.tabTracking, "")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -983,6 +1051,9 @@ class Ui_MainWindow(object):
         self.originalImage_frame_filt1 = QtWidgets.QLabel()
         self.originalImage_frame_filt2 = QtWidgets.QLabel()
         self.originalImage_frame_filt3 = QtWidgets.QLabel()
+
+        self.trackingLabels = False
+        self.trackingPaused = True
         # END MY MEMBERS
 
         self.retranslateUi(MainWindow)
@@ -1060,7 +1131,9 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabGeneration),
                                   _translate("MainWindow", "Video Generation"))
         self.buttTrackingLoad.setText(_translate("MainWindow", "Load"))
-        self.buttTrackingTrack.setText(_translate("MainWindow", "Track"))
+        self.buttTrackingTrack.setText(_translate("MainWindow", "Track y/n"))
+        self.buttTrackingPlay.setText(_translate("MainWindow", "Play/pause"))
+        self.buttTrackingSave.setText(_translate("MainWindow", "Save"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabTracking),
                                   _translate("MainWindow", "Video Tracking"))
 
@@ -1103,7 +1176,10 @@ class Ui_MainWindow(object):
         self.buttGenerationPause.clicked.connect(lambda: pauseGenerationVideo(self))
 
         self.buttTrackingLoad.clicked.connect(lambda: loadTrackingVideo(self))
-        self.buttTrackingTrack.clicked.connect(lambda: trackTracking(self))
+        self.buttTrackingTrack.clicked.connect(lambda: startTracking(self))
+        self.buttTrackingPlay.clicked.connect(lambda: playPause(self))
+        self.buttTrackingSave.clicked.connect(lambda: saveTrackedVideo(self))
+
         # END MY EVENT LISTENERS
 
     def playNextFrameGeneration(self):
@@ -1114,7 +1190,7 @@ class Ui_MainWindow(object):
         image = self.framesGeneration[self.now_frame_generation]
         showImageIntoGeneration(self, image)
         self.now_frame_generation += 1
-        print(self.now_frame_generation)
+
 
 
     def startTimerGeneration(self):
@@ -1134,12 +1210,43 @@ class Ui_MainWindow(object):
         self.timerTracking.stop()
 
     def playNextFrameTracking(self):
+
+        if self.trackingPaused:
+            return
+
+
         if self.now_frame_tracking >= len(self.framesTracking):
             self.now_frame_tracking = 0
 
         image = self.framesTracking[self.now_frame_tracking]
-        showImageIntoTracking(self, video.write_info_img(image))
+        showImageIntoTracking(self, video.write_info_img(image) if self.trackingLabels else image)
         self.now_frame_tracking += 1
+
+
+def startTracking(self):
+    self.trackingLabels = not self.trackingLabels
+
+
+def playPause(self):
+    self.trackingPaused = not self.trackingPaused
+
+
+def saveTrackedVideo(self):
+    fileName = prepareFileNameForSaveVideo(self)
+    if fileName is None:
+        print("fileName is none... exiting...")
+        return
+
+    fileName = fileName[0]
+    if fileName[-4:].lower() != ".avi":
+        fileName += ".avi"
+
+    temp_list = []
+
+    for untrackedFrame in self.framesTracking:
+        temp_list.append(video.write_info_img(untrackedFrame))
+
+    video.write_video(fileName, temp_list, self.FPS_tracking)
 
 
 def loadImage(self):
@@ -1195,6 +1302,7 @@ def saveImage(self, num):
 
 
 def generateGenerationVideo(obj):
+    obj.lblButtonGenerationGenerate.setText("Please wait...")
     numNoiseObjects = obj.sliderNoiseObjects.value()
     maxSizeNoise = obj.sliderNoiseMaxSize.value()
     numObjects = obj.sliderNumObjects.value()
@@ -1212,9 +1320,8 @@ def generateGenerationVideo(obj):
         fps=videoFPS,
         delay_change_noise=positionChange
     )
-
     affectGeneratedScene(obj, frames=frames_list, fps=videoFPS)
-    print("DONE")
+    obj.lblButtonGenerationGenerate.setText("Video generated")
 
 def loadTrackingVideo(obj):
 
@@ -1228,7 +1335,8 @@ def loadTrackingVideo(obj):
     if obj.framesTracking is not None and obj.FPS_tracking > 0:
         image = obj.framesTracking[0]
         showImageIntoTracking(obj, image)
-    print("DONE")
+
+    trackTracking(obj)
 
 
 def affectGeneratedScene(self, frames=None, fps=0):
@@ -1266,6 +1374,7 @@ def playTrackingScene(self):
 
 
 def saveGenerationVideo(self):
+    self.lblButtonGenerationSave.setText("Saving file...")
     fileName = prepareFileNameForSaveVideo(self)
     if fileName is None:
         print("fileName is none... exiting...")
@@ -1276,13 +1385,25 @@ def saveGenerationVideo(self):
         fileName += ".avi"
 
     video.write_video(fileName, self.framesGeneration, self.FPS_generation)
+    self.lblButtonGenerationSave.setText("File saved.")
+    self.lblButtonGenerationGenerate.setText("")
 
 
 def playGenerationVideo(self):
+
+    if self.framesGeneration is None:
+        self.lblButtonGenerationPause.setText("")
+        self.lblButtonGenerationPlay.setText("")
+
+
+    self.lblButtonGenerationPause.setText("")
+    self.lblButtonGenerationPlay.setText("Video playing")
     playGeneratedScene(self)
 
 
 def pauseGenerationVideo(self):
+    self.lblButtonGenerationPause.setText("Video Paused")
+    self.lblButtonGenerationPlay.setText("")
     self.pauseTimerGeneration()
 
 
