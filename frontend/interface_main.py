@@ -1303,6 +1303,7 @@ def saveImage(self, num):
 
 def generateGenerationVideo(obj):
     obj.lblButtonGenerationGenerate.setText("Please wait...")
+    obj.lblButtonGenerationGenerate.repaint()
     numNoiseObjects = obj.sliderNoiseObjects.value()
     maxSizeNoise = obj.sliderNoiseMaxSize.value()
     numObjects = obj.sliderNumObjects.value()
