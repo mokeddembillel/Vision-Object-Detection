@@ -852,37 +852,12 @@ class Ui_MainWindow(object):
         self.buttGenerationSave.setDefault(False)
         self.buttGenerationSave.setFlat(False)
         self.buttGenerationSave.setObjectName("buttGenerationSave")
-        self.lblReboundSpeed = QtWidgets.QLabel(self.tabGeneration)
-        self.lblReboundSpeed.setGeometry(QtCore.QRect(380, 620, 131, 31))
         font = QtGui.QFont()
         font.setFamily("Comic Sans MS")
         font.setPointSize(14)
-        self.lblReboundSpeed.setFont(font)
-        self.lblReboundSpeed.setStyleSheet("color: #8E9297;")
-        self.lblReboundSpeed.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.lblReboundSpeed.setObjectName("lblReboundSpeed")
-        self.sliderReboundSpeed = QtWidgets.QSlider(self.tabGeneration)
-        self.sliderReboundSpeed.setGeometry(QtCore.QRect(20, 670, 491, 22))
-        self.sliderReboundSpeed.setStyleSheet("")
-        self.sliderReboundSpeed.setMinimum(1)
-        self.sliderReboundSpeed.setMaximum(5)
-        self.sliderReboundSpeed.setSingleStep(1)
-        self.sliderReboundSpeed.setProperty("value", 1)
-        self.sliderReboundSpeed.setSliderPosition(1)
-        self.sliderReboundSpeed.setTracking(True)
-        self.sliderReboundSpeed.setOrientation(QtCore.Qt.Horizontal)
-        self.sliderReboundSpeed.setInvertedControls(False)
-        self.sliderReboundSpeed.setTickPosition(QtWidgets.QSlider.TicksBelow)
-        self.sliderReboundSpeed.setTickInterval(1)
-        self.sliderReboundSpeed.setObjectName("sliderReboundSpeed")
-        self.label_19 = QtWidgets.QLabel(self.tabGeneration)
-        self.label_19.setGeometry(QtCore.QRect(20, 620, 321, 31))
         font = QtGui.QFont()
         font.setFamily("Comic Sans MS")
         font.setPointSize(14)
-        self.label_19.setFont(font)
-        self.label_19.setStyleSheet("color: #8E9297;")
-        self.label_19.setObjectName("label_19")
         self.gViewGeneration = QtWidgets.QGraphicsView(self.tabGeneration)
         self.gViewGeneration.setGeometry(QtCore.QRect(540, 20, 800, 500))
         self.gViewGeneration.setStyleSheet("background-color:#202225;\n"
@@ -1116,7 +1091,7 @@ class Ui_MainWindow(object):
         self.lblNoiseMaxSize.setText(_translate("MainWindow", "50"))
         self.label_15.setText(_translate("MainWindow", "Number of Objects:"))
         self.lblNumObjects.setText(_translate("MainWindow", "0"))
-        self.label_16.setText(_translate("MainWindow", "Position Change (seconds):"))
+        self.label_16.setText(_translate("MainWindow", "Noise Change Delay (seconds):"))
         self.lblPositionChange.setText(_translate("MainWindow", "5"))
         self.label_17.setText(_translate("MainWindow", "Video Duration (seconds):"))
         self.lblVideoDuration.setText(_translate("MainWindow", "10"))
@@ -1126,8 +1101,6 @@ class Ui_MainWindow(object):
         self.buttGenerationPause.setText(_translate("MainWindow", "Pause"))
         self.buttGenerationPlay.setText(_translate("MainWindow", "Play"))
         self.buttGenerationSave.setText(_translate("MainWindow", "Save"))
-        self.lblReboundSpeed.setText(_translate("MainWindow", "1"))
-        self.label_19.setText(_translate("MainWindow", "Rebound Speed (trolling):"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabGeneration),
                                   _translate("MainWindow", "Video Generation"))
         self.buttTrackingLoad.setText(_translate("MainWindow", "Load"))
@@ -1164,7 +1137,6 @@ class Ui_MainWindow(object):
         self.sliderPositionChange.valueChanged.connect(lambda: changeLabelGeneration(self, 4))
         self.sliderVideoDuration.valueChanged.connect(lambda: changeLabelGeneration(self, 5))
         self.sliderVideoFPS.valueChanged.connect(lambda: changeLabelGeneration(self, 6))
-        self.sliderReboundSpeed.valueChanged.connect(lambda: changeLabelGeneration(self, 7))
 
         self.buttSaveSimple.clicked.connect(lambda: saveImage(self, 1))
         self.buttSaveGradient.clicked.connect(lambda: saveImage(self, 2))
@@ -1310,7 +1282,6 @@ def generateGenerationVideo(obj):
     positionChange = obj.sliderPositionChange.value()
     videoDuration = obj.sliderVideoDuration.value()
     videoFPS = obj.sliderVideoFPS.value()
-    reboundSpeed = obj.sliderReboundSpeed.value()
 
     frames_list = video.generate_video(
         num_noises=numNoiseObjects,
@@ -1569,8 +1540,6 @@ def changeLabelGeneration(self, num):
         var = int(var / 10) * 10
         self.sliderVideoFPS.setValue(var)
         self.lblVideoFPS.setText(str(self.sliderVideoFPS.value()))
-    if num == 7:
-        self.lblReboundSpeed.setText(str(self.sliderReboundSpeed.value()))
 
 
 if __name__ == "__main__":
