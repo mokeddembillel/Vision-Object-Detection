@@ -2,11 +2,13 @@ import cv2
 
 from backend.scene import Scene, Shape
 from backend.utils import detect
+import backend.scene
 
 
 def generate_video(resolution=(500, 800), time=10, fps=100, num_objects=5, num_noises=20, shape_types=list(Shape),
-                   delay_change_noise=1):
+                   delay_change_noise=1, maxSizeNoise=50):
     # time and delay in seconds
+    backend.scene.MAX_SIZE_NOISE = maxSizeNoise
     delay_change_noise = int(delay_change_noise * fps)
     fps = 1 / fps
     scene = Scene(shape=resolution, num_objects=num_objects, num_noise=num_noises, empty=True, shape_types=shape_types)

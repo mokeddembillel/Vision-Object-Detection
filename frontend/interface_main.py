@@ -1311,14 +1311,13 @@ def generateGenerationVideo(obj):
     videoFPS = obj.sliderVideoFPS.value()
     reboundSpeed = obj.sliderReboundSpeed.value()
 
-    scene.MIN_SIZE_NOISE = maxSizeNoise
-
     frames_list = video.generate_video(
         num_noises=numNoiseObjects,
         num_objects=numObjects,
         time=videoDuration,
         fps=videoFPS,
-        delay_change_noise=positionChange
+        delay_change_noise=positionChange,
+        maxSizeNoise=maxSizeNoise
     )
     affectGeneratedScene(obj, frames=frames_list, fps=videoFPS)
     obj.lblButtonGenerationGenerate.setText("Video generated")
