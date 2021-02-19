@@ -92,8 +92,8 @@ def detect(img, area_th=500):
     contours = [c for c in contours if poly_area(np.squeeze(c)) > area_th]
     results = []
     for contour in contours:
-        # num_edges = cv2.approxPolyDP(contour, 0.04 * cv2.arcLength(contour, True), True).shape[0]
-        num_edges = number_of_edges(contour, 1.12)
+        num_edges = cv2.approxPolyDP(contour, 0.04 * cv2.arcLength(contour, True), True).shape[0]
+        # num_edges = number_of_edges(contour, 1.12)
         shape = num_edges2shape[num_edges]
         cog = contour.squeeze().mean(0).astype(np.int)
         color = img[cog[1], cog[0]]
@@ -103,7 +103,7 @@ def detect(img, area_th=500):
         results.append((cog, shape, color))
     return results
 
-def number_of_edges(contour, coef=0.04):
+def number_of_edges(contour, coef=1.12):
     contour = contour.squeeze()
     num_edges = 0
     contour = [contour[i] for i in range(contour.shape[0])]
