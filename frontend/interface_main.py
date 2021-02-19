@@ -74,6 +74,7 @@ class Ui_MainWindow(object):
         self.sliderMean.setMinimum(3)
         self.sliderMean.setMaximum(19)
         self.sliderMean.setSingleStep(2)
+        self.sliderMean.setPageStep(2)
         self.sliderMean.setSliderPosition(3)
         self.sliderMean.setTracking(True)
         self.sliderMean.setOrientation(QtCore.Qt.Horizontal)
@@ -152,6 +153,7 @@ class Ui_MainWindow(object):
         self.sliderMedian.setMinimum(3)
         self.sliderMedian.setMaximum(19)
         self.sliderMedian.setSingleStep(2)
+        self.sliderMedian.setPageStep(2)
         self.sliderMedian.setSliderPosition(3)
         self.sliderMedian.setTracking(True)
         self.sliderMedian.setOrientation(QtCore.Qt.Horizontal)
@@ -209,6 +211,7 @@ class Ui_MainWindow(object):
         self.sliderGaussian.setMinimum(3)
         self.sliderGaussian.setMaximum(19)
         self.sliderGaussian.setSingleStep(2)
+        self.sliderGaussian.setPageStep(2)
         self.sliderGaussian.setSliderPosition(3)
         self.sliderGaussian.setTracking(True)
         self.sliderGaussian.setOrientation(QtCore.Qt.Horizontal)
@@ -303,6 +306,7 @@ class Ui_MainWindow(object):
         self.sliderLaplacian.setMinimum(3)
         self.sliderLaplacian.setMaximum(19)
         self.sliderLaplacian.setSingleStep(2)
+        self.sliderLaplacian.setPageStep(2)
         self.sliderLaplacian.setSliderPosition(3)
         self.sliderLaplacian.setTracking(True)
         self.sliderLaplacian.setOrientation(QtCore.Qt.Horizontal)
@@ -360,6 +364,7 @@ class Ui_MainWindow(object):
         self.sliderGradient.setMinimum(3)
         self.sliderGradient.setMaximum(19)
         self.sliderGradient.setSingleStep(2)
+        self.sliderGradient.setPageStep(2)
         self.sliderGradient.setSliderPosition(3)
         self.sliderGradient.setTracking(True)
         self.sliderGradient.setOrientation(QtCore.Qt.Horizontal)
@@ -462,7 +467,7 @@ class Ui_MainWindow(object):
         self.sliderErosion.setMinimum(3)
         self.sliderErosion.setMaximum(19)
         self.sliderErosion.setSingleStep(1)
-        self.sliderErosion.setPageStep(10)
+        self.sliderErosion.setPageStep(2)
         self.sliderErosion.setSliderPosition(3)
         self.sliderErosion.setTracking(True)
         self.sliderErosion.setOrientation(QtCore.Qt.Horizontal)
@@ -520,6 +525,7 @@ class Ui_MainWindow(object):
         self.sliderDilatation.setMinimum(3)
         self.sliderDilatation.setMaximum(19)
         self.sliderDilatation.setSingleStep(2)
+        self.sliderDilatation.setPageStep(2)
         self.sliderDilatation.setSliderPosition(3)
         self.sliderDilatation.setTracking(True)
         self.sliderDilatation.setOrientation(QtCore.Qt.Horizontal)
@@ -608,6 +614,7 @@ class Ui_MainWindow(object):
         self.sliderNoiseObjects.setMinimum(0)
         self.sliderNoiseObjects.setMaximum(30)
         self.sliderNoiseObjects.setSingleStep(1)
+        self.sliderNoiseObjects.setPageStep(5)
         self.sliderNoiseObjects.setProperty("value", 0)
         self.sliderNoiseObjects.setSliderPosition(0)
         self.sliderNoiseObjects.setTracking(True)
@@ -647,6 +654,7 @@ class Ui_MainWindow(object):
         self.sliderNoiseMaxSize.setMinimum(50)
         self.sliderNoiseMaxSize.setMaximum(200)
         self.sliderNoiseMaxSize.setSingleStep(10)
+        self.sliderNoiseMaxSize.setPageStep(30)
         self.sliderNoiseMaxSize.setProperty("value", 50)
         self.sliderNoiseMaxSize.setSliderPosition(50)
         self.sliderNoiseMaxSize.setTracking(True)
@@ -670,6 +678,7 @@ class Ui_MainWindow(object):
         self.sliderNumObjects.setMinimum(0)
         self.sliderNumObjects.setMaximum(10)
         self.sliderNumObjects.setSingleStep(1)
+        self.sliderNumObjects.setPageStep(1)
         self.sliderNumObjects.setProperty("value", 0)
         self.sliderNumObjects.setSliderPosition(0)
         self.sliderNumObjects.setTracking(True)
@@ -700,6 +709,7 @@ class Ui_MainWindow(object):
         self.sliderPositionChange.setStyleSheet("")
         self.sliderPositionChange.setMinimum(1)
         self.sliderPositionChange.setMaximum(20)
+        self.sliderPositionChange.setPageStep(1)
         self.sliderPositionChange.setSingleStep(1)
         self.sliderPositionChange.setProperty("value", 5)
         self.sliderPositionChange.setSliderPosition(5)
@@ -732,6 +742,7 @@ class Ui_MainWindow(object):
         self.sliderVideoDuration.setMinimum(1)
         self.sliderVideoDuration.setMaximum(20)
         self.sliderVideoDuration.setSingleStep(1)
+        self.sliderVideoDuration.setPageStep(1)
         self.sliderVideoDuration.setProperty("value", 10)
         self.sliderVideoDuration.setSliderPosition(10)
         self.sliderVideoDuration.setTracking(True)
@@ -763,6 +774,7 @@ class Ui_MainWindow(object):
         self.sliderVideoFPS.setMinimum(10)
         self.sliderVideoFPS.setMaximum(120)
         self.sliderVideoFPS.setSingleStep(10)
+        self.sliderVideoFPS.setPageStep(10)
         self.sliderVideoFPS.setProperty("value", 20)
         self.sliderVideoFPS.setSliderPosition(20)
         self.sliderVideoFPS.setTracking(True)
@@ -1031,6 +1043,22 @@ class Ui_MainWindow(object):
         self.trackingPaused = True
         # END MY MEMBERS
 
+        self.sliderNoiseObjects.setValue(20)
+        self.sliderNumObjects.setValue(4)
+        self.sliderNoiseMaxSize.setValue(100)
+        self.sliderPositionChange.setValue(1)
+        self.sliderVideoDuration.setValue(10)
+        self.sliderVideoFPS.setValue(60)
+
+        self.lblNoiseObjects.setText("20")
+        self.lblNoiseObjects.repaint()
+        self.lblNumObjects.setText("4")
+        self.lblNoiseMaxSize.setText("100")
+        self.lblPositionChange.setText("1")
+        self.lblVideoDuration.setText('10')
+        self.lblVideoFPS.setText("60")
+
+
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -1152,6 +1180,8 @@ class Ui_MainWindow(object):
         self.buttTrackingPlay.clicked.connect(lambda: playPause(self))
         self.buttTrackingSave.clicked.connect(lambda: saveTrackedVideo(self))
 
+
+
         # END MY EVENT LISTENERS
 
     def playNextFrameGeneration(self):
@@ -1162,6 +1192,7 @@ class Ui_MainWindow(object):
         image = self.framesGeneration[self.now_frame_generation]
         showImageIntoGeneration(self, image)
         self.now_frame_generation += 1
+
 
 
 
