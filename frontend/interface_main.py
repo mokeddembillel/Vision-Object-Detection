@@ -52,7 +52,7 @@ class Ui_MainWindow(object):
         self.gViewSimpleLeft = QtWidgets.QGraphicsView(self.tabSimpleFilters)
         self.gViewSimpleLeft.setGeometry(QtCore.QRect(10, 10, 661, 411))
         self.gViewSimpleLeft.setStyleSheet("background-color: #202225;\n"
-"border-radius: 5;")
+                                           "border-radius: 5;")
         self.gViewSimpleLeft.setObjectName("gViewSimpleLeft")
         self.groupBox = QtWidgets.QGroupBox(self.tabSimpleFilters)
         self.groupBox.setGeometry(QtCore.QRect(170, 440, 361, 261))
@@ -61,9 +61,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.groupBox.setFont(font)
         self.groupBox.setStyleSheet("color: #8E9297;\n"
-"background-color: #202225;\n"
-"border: none;\n"
-"border-radius: 10;")
+                                    "background-color: #202225;\n"
+                                    "border: none;\n"
+                                    "border-radius: 10;")
         self.groupBox.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox.setFlat(True)
         self.groupBox.setCheckable(False)
@@ -106,8 +106,8 @@ class Ui_MainWindow(object):
         self.buttMean.setFont(font)
         self.buttMean.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttMean.setStyleSheet("background-color: #2F3136;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                    "color: #8E9297;\n"
+                                    "border-radius: 20;")
         self.buttMean.setAutoDefault(False)
         self.buttMean.setDefault(False)
         self.buttMean.setFlat(False)
@@ -115,7 +115,7 @@ class Ui_MainWindow(object):
         self.gViewSimpleRight = QtWidgets.QGraphicsView(self.tabSimpleFilters)
         self.gViewSimpleRight.setGeometry(QtCore.QRect(690, 10, 661, 411))
         self.gViewSimpleRight.setStyleSheet("background-color: #202225;\n"
-"border-radius:5;")
+                                            "border-radius:5;")
         self.gViewSimpleRight.setObjectName("gViewSimpleRight")
         self.buttLoadSimple = QtWidgets.QPushButton(self.tabSimpleFilters)
         self.buttLoadSimple.setGeometry(QtCore.QRect(20, 440, 131, 81))
@@ -127,8 +127,8 @@ class Ui_MainWindow(object):
         self.buttLoadSimple.setFont(font)
         self.buttLoadSimple.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttLoadSimple.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                          "color: #8E9297;\n"
+                                          "border-radius: 20;")
         self.buttLoadSimple.setAutoDefault(False)
         self.buttLoadSimple.setDefault(False)
         self.buttLoadSimple.setFlat(False)
@@ -140,9 +140,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.groupBox_2.setFont(font)
         self.groupBox_2.setStyleSheet("color: #8E9297;\n"
-"background-color: #202225;\n"
-"border: none;\n"
-"border-radius: 10;")
+                                      "background-color: #202225;\n"
+                                      "border: none;\n"
+                                      "border-radius: 10;")
         self.groupBox_2.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_2.setFlat(True)
         self.groupBox_2.setCheckable(False)
@@ -185,8 +185,8 @@ class Ui_MainWindow(object):
         self.buttMedian.setFont(font)
         self.buttMedian.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttMedian.setStyleSheet("background-color: #2F3136;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                      "color: #8E9297;\n"
+                                      "border-radius: 20;")
         self.buttMedian.setAutoDefault(False)
         self.buttMedian.setDefault(False)
         self.buttMedian.setFlat(False)
@@ -198,9 +198,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.groupBox_3.setFont(font)
         self.groupBox_3.setStyleSheet("color: #8E9297;\n"
-"background-color: #202225;\n"
-"border: none;\n"
-"border-radius: 10;")
+                                      "background-color: #202225;\n"
+                                      "border: none;\n"
+                                      "border-radius: 10;")
         self.groupBox_3.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_3.setFlat(True)
         self.groupBox_3.setCheckable(False)
@@ -243,8 +243,8 @@ class Ui_MainWindow(object):
         self.buttGaussian.setFont(font)
         self.buttGaussian.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttGaussian.setStyleSheet("background-color: #2F3136;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                        "color: #8E9297;\n"
+                                        "border-radius: 20;")
         self.buttGaussian.setAutoDefault(False)
         self.buttGaussian.setDefault(False)
         self.buttGaussian.setFlat(False)
@@ -277,8 +277,8 @@ class Ui_MainWindow(object):
         self.buttSaveSimple.setFont(font)
         self.buttSaveSimple.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttSaveSimple.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                          "color: #8E9297;\n"
+                                          "border-radius: 20;")
         self.buttSaveSimple.setAutoDefault(False)
         self.buttSaveSimple.setDefault(False)
         self.buttSaveSimple.setFlat(False)
@@ -293,9 +293,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.groupBox_4.setFont(font)
         self.groupBox_4.setStyleSheet("color: #8E9297;\n"
-"background-color: #202225;\n"
-"border: none;\n"
-"border-radius: 10;")
+                                      "background-color: #202225;\n"
+                                      "border: none;\n"
+                                      "border-radius: 10;")
         self.groupBox_4.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_4.setFlat(True)
         self.groupBox_4.setCheckable(False)
@@ -338,8 +338,8 @@ class Ui_MainWindow(object):
         self.buttLaplacian.setFont(font)
         self.buttLaplacian.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttLaplacian.setStyleSheet("background-color: #2F3136;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                         "color: #8E9297;\n"
+                                         "border-radius: 20;")
         self.buttLaplacian.setAutoDefault(False)
         self.buttLaplacian.setDefault(False)
         self.buttLaplacian.setFlat(False)
@@ -351,9 +351,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.groupBox_5.setFont(font)
         self.groupBox_5.setStyleSheet("color: #8E9297;\n"
-"background-color: #202225;\n"
-"border: none;\n"
-"border-radius: 10;")
+                                      "background-color: #202225;\n"
+                                      "border: none;\n"
+                                      "border-radius: 10;")
         self.groupBox_5.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_5.setFlat(True)
         self.groupBox_5.setCheckable(False)
@@ -396,8 +396,8 @@ class Ui_MainWindow(object):
         self.buttGradient.setFont(font)
         self.buttGradient.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttGradient.setStyleSheet("background-color: #2F3136;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                        "color: #8E9297;\n"
+                                        "border-radius: 20;")
         self.buttGradient.setAutoDefault(False)
         self.buttGradient.setDefault(False)
         self.buttGradient.setFlat(False)
@@ -405,12 +405,12 @@ class Ui_MainWindow(object):
         self.gViewGradientLeft = QtWidgets.QGraphicsView(self.tabGradient)
         self.gViewGradientLeft.setGeometry(QtCore.QRect(10, 10, 661, 411))
         self.gViewGradientLeft.setStyleSheet("background-color: #202225;\n"
-"border-radius: 5;")
+                                             "border-radius: 5;")
         self.gViewGradientLeft.setObjectName("gViewGradientLeft")
         self.gViewGradientRight = QtWidgets.QGraphicsView(self.tabGradient)
         self.gViewGradientRight.setGeometry(QtCore.QRect(690, 10, 661, 411))
         self.gViewGradientRight.setStyleSheet("background-color: #202225;\n"
-"border-radius:5;")
+                                              "border-radius:5;")
         self.gViewGradientRight.setObjectName("gViewGradientRight")
         self.buttLoadGradient = QtWidgets.QPushButton(self.tabGradient)
         self.buttLoadGradient.setGeometry(QtCore.QRect(20, 440, 131, 81))
@@ -422,8 +422,8 @@ class Ui_MainWindow(object):
         self.buttLoadGradient.setFont(font)
         self.buttLoadGradient.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttLoadGradient.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                            "color: #8E9297;\n"
+                                            "border-radius: 20;")
         self.buttLoadGradient.setAutoDefault(False)
         self.buttLoadGradient.setDefault(False)
         self.buttLoadGradient.setFlat(False)
@@ -438,8 +438,8 @@ class Ui_MainWindow(object):
         self.buttSaveGradient.setFont(font)
         self.buttSaveGradient.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttSaveGradient.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                            "color: #8E9297;\n"
+                                            "border-radius: 20;")
         self.buttSaveGradient.setAutoDefault(False)
         self.buttSaveGradient.setDefault(False)
         self.buttSaveGradient.setFlat(False)
@@ -454,9 +454,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.groupBox_6.setFont(font)
         self.groupBox_6.setStyleSheet("color: #8E9297;\n"
-"background-color: #202225;\n"
-"border: none;\n"
-"border-radius: 10;")
+                                      "background-color: #202225;\n"
+                                      "border: none;\n"
+                                      "border-radius: 10;")
         self.groupBox_6.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_6.setFlat(True)
         self.groupBox_6.setCheckable(False)
@@ -499,8 +499,8 @@ class Ui_MainWindow(object):
         self.buttErosion.setFont(font)
         self.buttErosion.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttErosion.setStyleSheet("background-color: #2F3136;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                       "color: #8E9297;\n"
+                                       "border-radius: 20;")
         self.buttErosion.setAutoDefault(False)
         self.buttErosion.setDefault(False)
         self.buttErosion.setFlat(False)
@@ -512,9 +512,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.groupBox_7.setFont(font)
         self.groupBox_7.setStyleSheet("color: #8E9297;\n"
-"background-color: #202225;\n"
-"border: none;\n"
-"border-radius: 10;")
+                                      "background-color: #202225;\n"
+                                      "border: none;\n"
+                                      "border-radius: 10;")
         self.groupBox_7.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_7.setFlat(True)
         self.groupBox_7.setCheckable(False)
@@ -557,8 +557,8 @@ class Ui_MainWindow(object):
         self.buttDilatation.setFont(font)
         self.buttDilatation.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttDilatation.setStyleSheet("background-color: #2F3136;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                          "color: #8E9297;\n"
+                                          "border-radius: 20;")
         self.buttDilatation.setAutoDefault(False)
         self.buttDilatation.setDefault(False)
         self.buttDilatation.setFlat(False)
@@ -566,7 +566,7 @@ class Ui_MainWindow(object):
         self.gViewErosionRight = QtWidgets.QGraphicsView(self.tabErosion)
         self.gViewErosionRight.setGeometry(QtCore.QRect(690, 10, 661, 411))
         self.gViewErosionRight.setStyleSheet("background-color: #202225;\n"
-"border-radius:5;")
+                                             "border-radius:5;")
         self.gViewErosionRight.setObjectName("gViewErosionRight")
         self.buttLoadErosion = QtWidgets.QPushButton(self.tabErosion)
         self.buttLoadErosion.setGeometry(QtCore.QRect(20, 440, 131, 81))
@@ -578,8 +578,8 @@ class Ui_MainWindow(object):
         self.buttLoadErosion.setFont(font)
         self.buttLoadErosion.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttLoadErosion.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                           "color: #8E9297;\n"
+                                           "border-radius: 20;")
         self.buttLoadErosion.setAutoDefault(False)
         self.buttLoadErosion.setDefault(False)
         self.buttLoadErosion.setFlat(False)
@@ -587,7 +587,7 @@ class Ui_MainWindow(object):
         self.gViewErosionLeft = QtWidgets.QGraphicsView(self.tabErosion)
         self.gViewErosionLeft.setGeometry(QtCore.QRect(10, 10, 661, 411))
         self.gViewErosionLeft.setStyleSheet("background-color: #202225;\n"
-"border-radius: 5;")
+                                            "border-radius: 5;")
         self.gViewErosionLeft.setObjectName("gViewErosionLeft")
         self.buttSaveErosion = QtWidgets.QPushButton(self.tabErosion)
         self.buttSaveErosion.setGeometry(QtCore.QRect(20, 550, 131, 81))
@@ -599,8 +599,8 @@ class Ui_MainWindow(object):
         self.buttSaveErosion.setFont(font)
         self.buttSaveErosion.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttSaveErosion.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                           "color: #8E9297;\n"
+                                           "border-radius: 20;")
         self.buttSaveErosion.setAutoDefault(False)
         self.buttSaveErosion.setDefault(False)
         self.buttSaveErosion.setFlat(False)
@@ -652,7 +652,7 @@ class Ui_MainWindow(object):
         self.sliderNoiseMaxSize.setGeometry(QtCore.QRect(20, 170, 491, 22))
         self.sliderNoiseMaxSize.setStyleSheet("")
         self.sliderNoiseMaxSize.setMinimum(50)
-        self.sliderNoiseMaxSize.setMaximum(200)
+        self.sliderNoiseMaxSize.setMaximum(500)
         self.sliderNoiseMaxSize.setSingleStep(10)
         self.sliderNoiseMaxSize.setPageStep(30)
         self.sliderNoiseMaxSize.setProperty("value", 50)
@@ -810,8 +810,8 @@ class Ui_MainWindow(object):
         self.buttGenerationGenerate.setFont(font)
         self.buttGenerationGenerate.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttGenerationGenerate.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                                  "color: #8E9297;\n"
+                                                  "border-radius: 20;")
         self.buttGenerationGenerate.setAutoDefault(False)
         self.buttGenerationGenerate.setDefault(False)
         self.buttGenerationGenerate.setFlat(False)
@@ -826,8 +826,8 @@ class Ui_MainWindow(object):
         self.buttGenerationPause.setFont(font)
         self.buttGenerationPause.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttGenerationPause.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                               "color: #8E9297;\n"
+                                               "border-radius: 20;")
         self.buttGenerationPause.setAutoDefault(False)
         self.buttGenerationPause.setDefault(False)
         self.buttGenerationPause.setFlat(False)
@@ -842,8 +842,8 @@ class Ui_MainWindow(object):
         self.buttGenerationPlay.setFont(font)
         self.buttGenerationPlay.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttGenerationPlay.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                              "color: #8E9297;\n"
+                                              "border-radius: 20;")
         self.buttGenerationPlay.setAutoDefault(False)
         self.buttGenerationPlay.setDefault(False)
         self.buttGenerationPlay.setFlat(False)
@@ -858,8 +858,8 @@ class Ui_MainWindow(object):
         self.buttGenerationSave.setFont(font)
         self.buttGenerationSave.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttGenerationSave.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                              "color: #8E9297;\n"
+                                              "border-radius: 20;")
         self.buttGenerationSave.setAutoDefault(False)
         self.buttGenerationSave.setDefault(False)
         self.buttGenerationSave.setFlat(False)
@@ -873,7 +873,7 @@ class Ui_MainWindow(object):
         self.gViewGeneration = QtWidgets.QGraphicsView(self.tabGeneration)
         self.gViewGeneration.setGeometry(QtCore.QRect(540, 20, 800, 500))
         self.gViewGeneration.setStyleSheet("background-color:#202225;\n"
-"border-radius:5;")
+                                           "border-radius:5;")
         self.gViewGeneration.setObjectName("gViewGeneration")
         self.lblButtonGenerationGenerate = QtWidgets.QLabel(self.tabGeneration)
         self.lblButtonGenerationGenerate.setGeometry(QtCore.QRect(550, 650, 181, 31))
@@ -928,8 +928,8 @@ class Ui_MainWindow(object):
         self.buttTrackingLoad.setFont(font)
         self.buttTrackingLoad.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttTrackingLoad.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                            "color: #8E9297;\n"
+                                            "border-radius: 20;")
         self.buttTrackingLoad.setAutoDefault(False)
         self.buttTrackingLoad.setDefault(False)
         self.buttTrackingLoad.setFlat(False)
@@ -944,8 +944,8 @@ class Ui_MainWindow(object):
         self.buttTrackingTrack.setFont(font)
         self.buttTrackingTrack.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttTrackingTrack.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                             "color: #8E9297;\n"
+                                             "border-radius: 20;")
         self.buttTrackingTrack.setAutoDefault(False)
         self.buttTrackingTrack.setDefault(False)
         self.buttTrackingTrack.setFlat(False)
@@ -953,7 +953,7 @@ class Ui_MainWindow(object):
         self.gViewTracking = QtWidgets.QGraphicsView(self.tabTracking)
         self.gViewTracking.setGeometry(QtCore.QRect(280, 40, 800, 500))
         self.gViewTracking.setStyleSheet("background-color:#202225;\n"
-"border-radius:5;")
+                                         "border-radius:5;")
         self.gViewTracking.setObjectName("gViewTracking")
         self.buttTrackingPlay = QtWidgets.QPushButton(self.tabTracking)
         self.buttTrackingPlay.setGeometry(QtCore.QRect(690, 550, 181, 81))
@@ -965,8 +965,8 @@ class Ui_MainWindow(object):
         self.buttTrackingPlay.setFont(font)
         self.buttTrackingPlay.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttTrackingPlay.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                            "color: #8E9297;\n"
+                                            "border-radius: 20;")
         self.buttTrackingPlay.setAutoDefault(False)
         self.buttTrackingPlay.setDefault(False)
         self.buttTrackingPlay.setFlat(False)
@@ -981,8 +981,8 @@ class Ui_MainWindow(object):
         self.buttTrackingSave.setFont(font)
         self.buttTrackingSave.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.buttTrackingSave.setStyleSheet("background-color: #202225;\n"
-"color: #8E9297;\n"
-"border-radius: 20;")
+                                            "color: #8E9297;\n"
+                                            "border-radius: 20;")
         self.buttTrackingSave.setAutoDefault(False)
         self.buttTrackingSave.setDefault(False)
         self.buttTrackingSave.setFlat(False)
@@ -1227,12 +1227,18 @@ def playPause(self):
 
 
 def saveTrackedVideo(self):
+    if self.framesTracking is None:
+        return
     fileName = prepareFileNameForSaveVideo(self)
     if fileName is None:
         print("fileName is none... exiting...")
         return
 
     fileName = fileName[0]
+
+    if len(fileName) == 0:
+        return
+
     if fileName[-4:].lower() != ".avi":
         fileName += ".avi"
 
@@ -1285,6 +1291,10 @@ def saveImage(self, num):
         return
 
     fileName = fileName[0]
+
+    if len(fileName) == 0:
+        return
+
     if fileName[-4:].lower() != ".png":
         fileName += ".png"
 
@@ -1368,13 +1378,22 @@ def playTrackingScene(self):
 
 
 def saveGenerationVideo(self):
+    if self.framesGeneration is None:
+        return
     self.lblButtonGenerationSave.setText("Saving file...")
     fileName = prepareFileNameForSaveVideo(self)
     if fileName is None:
+        self.lblButtonGenerationSave.setText("")
         print("fileName is none... exiting...")
         return
 
     fileName = fileName[0]
+
+    if len(fileName) == 0:
+        self.lblButtonGenerationSave.setText("")
+        self.lblButtonGenerationGenerate.setText("")
+        return
+
     if fileName[-4:].lower() != ".avi":
         fileName += ".avi"
 
