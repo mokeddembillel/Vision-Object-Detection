@@ -14,6 +14,7 @@ import backend.video as video
 import backend.scene as scene
 import cv2
 import os
+import numpy as np
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -1258,7 +1259,7 @@ def loadImage(self):
     u = url[0]
     u = os.path.normpath(u)
 
-    image = cv2.imread(u)
+    image = cv2.imdecode(np.fromfile(u, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
     self.originalImage = image
 
     showImageIntoOriginal(self)
