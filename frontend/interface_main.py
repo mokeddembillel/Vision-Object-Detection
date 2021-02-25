@@ -9,6 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QRegExpValidator
+
 import backend.utils as utils
 import backend.video as video
 import backend.scene as scene
@@ -257,17 +260,16 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
-        self.textSigma = QtWidgets.QTextEdit(self.groupBox_3)
-        self.textSigma.setGeometry(QtCore.QRect(80, 150, 91, 41))
+        self.textSigma = QtWidgets.QLineEdit(self.groupBox_3)
+        self.textSigma.setGeometry(QtCore.QRect(80, 145, 91, 41))
         font = QtGui.QFont()
         font.setFamily("Comic Sans MS")
         font.setPointSize(12)
         self.textSigma.setFont(font)
         self.textSigma.setStyleSheet("border: none;")
-        self.textSigma.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.textSigma.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.textSigma.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.textSigma.setObjectName("textSigma")
+        self.textSigma.setText('1')
+        self.textSigma.setMaxLength(5)
         self.buttSaveSimple = QtWidgets.QPushButton(self.tabSimpleFilters)
         self.buttSaveSimple.setGeometry(QtCore.QRect(20, 550, 131, 81))
         font = QtGui.QFont()
@@ -1073,12 +1075,6 @@ class Ui_MainWindow(object):
         self.lblGaussianKernelSize.setText(_translate("MainWindow", "3x3"))
         self.buttGaussian.setText(_translate("MainWindow", "Apply"))
         self.label_4.setText(_translate("MainWindow", "Sigma:"))
-        self.textSigma.setHtml(_translate("MainWindow",
-                                          "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-                                          "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-                                          "p, li { white-space: pre-wrap; }\n"
-                                          "</style></head><body style=\" font-family:\'Comic Sans MS\'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-                                          "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1</p></body></html>"))
         self.buttSaveSimple.setText(_translate("MainWindow", "Save"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabSimpleFilters),
                                   _translate("MainWindow", "Simple Filters"))
@@ -1146,7 +1142,7 @@ class Ui_MainWindow(object):
         self.buttMean.clicked.connect(lambda: filterMean(self, size=self.sliderMean.value()))
         self.buttMedian.clicked.connect(lambda: filterMedian(self, size=self.sliderMedian.value()))
         self.buttGaussian.clicked.connect(
-            lambda: filterGaussian(self, size=self.sliderGaussian.value(), sigma=float(self.textSigma.toPlainText())))
+            lambda: filterGaussian(self, size=self.sliderGaussian.value(), sigma=float(self.textSigma.text())))
         self.buttGradient.clicked.connect(lambda: filterGradient(self, size=self.sliderGradient.value()))
         self.buttLaplacian.clicked.connect(lambda: filterLaplacian(self, size=self.sliderLaplacian.value()))
         self.buttErosion.clicked.connect(lambda: filterErosion(self, size=self.sliderErosion.value()))
@@ -1174,6 +1170,9 @@ class Ui_MainWindow(object):
         self.buttTrackingSave.clicked.connect(lambda: saveTrackedVideo(self))
 
 
+        self.rx = QRegExp(r"^([0-9]+(.[0-9]+)?)?$")
+        self.validator = QRegExpValidator(self.rx, self.textSigma)
+        self.textSigma.setValidator(self.validator)
 
         # END MY EVENT LISTENERS
 
